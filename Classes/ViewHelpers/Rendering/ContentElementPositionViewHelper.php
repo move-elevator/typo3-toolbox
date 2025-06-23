@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\Typo3Toolbox\ViewHelpers\Rendering;
 
-use MoveElevator\Toolbox\Domain\Repository\ContentRepository;
+use MoveElevator\Typo3Toolbox\Domain\Repository\ContentRepository;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
