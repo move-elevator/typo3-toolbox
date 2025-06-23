@@ -3,7 +3,7 @@
 	"description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
 	"type": "typo3-cms-extension",
 	"require": {
-		"php/": "^8.4",
+		"php": "^8.4",
 		"typo3/cms-backend": "^13.4",
 		"typo3/cms-core": "^13.4",
 		"typo3/cms-fluid": "^13.4",
