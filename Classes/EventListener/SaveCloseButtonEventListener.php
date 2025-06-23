@@ -46,7 +46,7 @@ final class SaveCloseButtonEventListener
 
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@move-elevator/toolbox/SaveAndClose.js');
+        $pageRenderer->loadJavaScriptModule('@move-elevator/typo3-toolbox/SaveAndClose.js');
 
         $event->setButtons($buttons);
     }
