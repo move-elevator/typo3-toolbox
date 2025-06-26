@@ -50,7 +50,7 @@ final class ContentMinifierEventListener
             $content
         );
 
-        $content = preg_replace_callback(
+        $content = (string)preg_replace_callback(
             '/class="([^"]+)"/',
             static function ($matches) {
                 $cleanedClassList = trim(preg_replace('/\s+/', ' ', $matches[1]));
@@ -59,7 +59,7 @@ final class ContentMinifierEventListener
             $content
         );
 
-        $content = preg_replace_callback(
+        $content = (string)preg_replace_callback(
             '/<script\s+type="application\/ld\+json">(.*?)<\/script>/s',
             static function ($matches) {
                 $json = trim($matches[1]);
