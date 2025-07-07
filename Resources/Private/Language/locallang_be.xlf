@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" product-name="typo3-toolbox">
+		<header/>
+		<body>
+			<trans-unit id="extension_manager.sentry_backend_enabled">
+				<source>Enables Sentry client debug and production error handler and log file writer.</source>
+			</trans-unit>
+			<trans-unit id="extension_manager.sentry_frontend_enabled">
+				<source>Enables the Sentry credential data middleware entrypoint "/api/sentry" which will be used for Sentry JavaScript service class.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
