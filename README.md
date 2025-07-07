@@ -15,3 +15,20 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds an event listener to add save & close button
 - Adds a xClass for TYPO3 asset collector which will automatically render `noscript` tags beside CSS link tags, which can be adopted to optimize CSS preloading (see: https://web.dev/articles/defer-non-critical-css)
 - Adds a view helper which can return the uid of the first content element on a page X
+
+## Requirements
+
+* TYPO3 >= 13.4 & PHP 8.4
+
+## Installation
+
+### Composer
+
+``` bash
+composer require move-elevator/typo3-toolbox
+```
+
+## License
+
+This project is licensed
+under [GNU General Public License 2.0 (or later)](LICENSE.md).
