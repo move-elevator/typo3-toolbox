@@ -1,4 +1,14 @@
-# TYPO3 Toolbox
+<div align="center">
+
+# TYPO3 extension `typo3_toolbox`
+
+[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/13/orange)]()
+[![License](https://poser.pugx.org/move-elevator/typo3-toolbox/license)](LICENSE.md)
+[![last commit](https://img.shields.io/github/last-commit/move-elevator/typo3-toolbox)](https://github.com/move-elevator/typo3-toolbox/commits)
+
+</div>
+
+This extension provides several tools for TYPO3 integrators and developers.
 
 ## Features:
 - Adds an event listener to minify HTML output
