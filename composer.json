@@ -46,7 +46,7 @@
   },
   "scripts": {
     "fix": [
-      "@fix:composer:normalize",
+      "@fix:composer",
       "@fix:editorconfig",
       "@fix:php:fixer",
       "@fix:yaml",
@@ -54,7 +54,7 @@
       "@fix:php:stan",
       "@fix:php:rector"
     ],
-    "fix:composer:normalize": "@composer normalize --no-check-lock",
+    "fix:composer": "@composer normalize --no-check-lock",
     "fix:editorconfig": "ec --strict --fix --git-only -n",
     "fix:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix",
     "fix:php:rector": "rector",
@@ -63,7 +63,7 @@
     "fix:xml": "",
     "fix:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
     "lint": [
-      "@lint:composer:normalize",
+      "@lint:composer",
       "@lint:composer:dependencies",
       "@lint:editorconfig",
       "@lint:php",
@@ -73,8 +73,8 @@
       "@lint:php:rector",
       "@lint:php:fixer"
     ],
+    "lint:composer": "@composer normalize --no-check-lock --dry-run",
     "lint:composer:dependencies": "composer-dependency-analyser",
-    "lint:composer:normalize": "@composer normalize --no-check-lock --dry-run",
     "lint:editorconfig": "ec --strict --git-only -n",
     "lint:php": "find *.php . -name '*.php' ! -path './vendor/*'  ! -path './var/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' ! -path '*node_modules/*' -print0 | xargs -0 -n 1 -P 4 php -l",
     "lint:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
