@@ -72,15 +72,6 @@ parameters:
 			path: Classes/EventListener/ContentMinifierEventListener.php
 
 		-
-			message: '''
-				#^Fetching deprecated class constant SIZE_SMALL of class TYPO3\\CMS\\Core\\Imaging\\Icon\:
-				Use TYPO3\\CMS\\Core\\Imaging\\IconSize\:\:SMALL instead$#
-			'''
-			identifier: classConstant.deprecated
-			count: 1
-			path: Classes/EventListener/SaveCloseButtonEventListener.php
-
-		-
 			message: '#^Only booleans are allowed in a ternary operator condition, TYPO3\\CMS\\Core\\Localization\\LanguageService\|null given\.$#'
 			identifier: ternary.condNotBoolean
 			count: 1
