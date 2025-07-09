@@ -27,7 +27,7 @@ return RectorConfig::configure()
         Typo3Option::PHPSTAN_FOR_RECTOR_PATH,
     ])
     ->withRules([
-        AddVoidReturnTypeWhereNoReturnRector::class
+        AddVoidReturnTypeWhereNoReturnRector::class,
     ])
     // If you use withImportNames(), you should consider excluding some TYPO3 files.
     ->withSkip([
