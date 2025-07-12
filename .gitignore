@@ -4,5 +4,6 @@
 /vendor
 /.php-cs-fixer.cache
 /composer.lock
+/package-lock.json
 /php-cs-fixer.xml
 /phpstan.xml

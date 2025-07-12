@@ -36,9 +36,23 @@ composer require move-elevator/typo3-toolbox
 Add the following environment variables to your `.env` file to configure Sentry:
 
 ```dotenv
-SENTRY_DSN='
-SENTRY_ENVIRONMENT=
-SENTRY_RELEASE='
+SENTRY_DSN=''
+SENTRY_ENVIRONMENT=''
+SENTRY_RELEASE=''
+```
+
+If you want to use the Sentry frontend monitoring as well, you can use the shipped Sentry Monitoring Service JavaScript or just adopt this.
+
+For example:
+
+```
+<f:asset.script
+    defer="1"
+    identifier="sentryMonitoringService"
+    nonce="{f:security.nonce()}"
+    priority="1"
+    src="EXT:typo3-toolbox/Resources/Public/JavaScript/Service/SentryMonitoringService.min.js"
+/>
 ```
 
 ## Documentation

@@ -36,4 +36,5 @@ class SentryMonitoringService {
   }
 }
 
-export default SentryMonitoringService
+const sentryMonitoringService = new SentryMonitoringService()
+sentryMonitoringService.init()
