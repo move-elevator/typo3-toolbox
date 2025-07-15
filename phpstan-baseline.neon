@@ -49,7 +49,7 @@ parameters:
 			path: Classes/Domain/Repository/AbstractRepository.php
 
 		-
-			message: '#^Out of 29 possible param types, only 23 \- 79\.3 %% actually have it\. Add more param types to get over 95 %%$#'
+			message: '#^Out of 32 possible param types, only 26 \- 81\.2 %% actually have it\. Add more param types to get over 95 %%$#'
 			identifier: typeCoverage.paramTypeCoverage
 			count: 1
 			path: Classes/Domain/Repository/AbstractRepository.php
@@ -66,19 +66,10 @@ parameters:
 			path: Classes/EventListener/ContentMinifierEventListener.php
 
 		-
-			message: '#^Out of 29 possible param types, only 23 \- 79\.3 %% actually have it\. Add more param types to get over 95 %%$#'
+			message: '#^Out of 32 possible param types, only 26 \- 81\.2 %% actually have it\. Add more param types to get over 95 %%$#'
 			identifier: typeCoverage.paramTypeCoverage
 			count: 2
 			path: Classes/EventListener/ContentMinifierEventListener.php
-
-		-
-			message: '''
-				#^Fetching deprecated class constant SIZE_SMALL of class TYPO3\\CMS\\Core\\Imaging\\Icon\:
-				Use TYPO3\\CMS\\Core\\Imaging\\IconSize\:\:SMALL instead$#
-			'''
-			identifier: classConstant.deprecated
-			count: 1
-			path: Classes/EventListener/SaveCloseButtonEventListener.php
 
 		-
 			message: '#^Only booleans are allowed in a ternary operator condition, TYPO3\\CMS\\Core\\Localization\\LanguageService\|null given\.$#'
@@ -111,7 +102,7 @@ parameters:
 			path: Classes/ViewHelpers/Asset/CssViewHelper.php
 
 		-
-			message: '#^Out of 29 possible param types, only 23 \- 79\.3 %% actually have it\. Add more param types to get over 95 %%$#'
+			message: '#^Out of 32 possible param types, only 26 \- 81\.2 %% actually have it\. Add more param types to get over 95 %%$#'
 			identifier: typeCoverage.paramTypeCoverage
 			count: 3
 			path: Classes/ViewHelpers/Asset/CssViewHelper.php
