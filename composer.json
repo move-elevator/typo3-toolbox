@@ -1,92 +1,92 @@
 {
-  "name": "move-elevator/typo3-toolbox",
-  "description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
-  "type": "typo3-cms-extension",
-  "require": {
-    "php": "^8.4",
-    "doctrine/dbal": "^4.2",
-    "networkteam/sentry-client": "^5.2",
-    "psr/http-factory": "^1.1",
-    "psr/http-message": "^2.0",
-    "psr/http-server-handler": "^1.0",
-    "psr/http-server-middleware": "^1.0",
-    "psr/log": "^3.0",
-    "typo3/cms-backend": "^13.4",
-    "typo3/cms-core": "^13.4",
-    "typo3/cms-frontend": "^13.4",
-    "typo3fluid/fluid": "^4.3"
-  },
-  "require-dev": {
-    "armin/editorconfig-cli": "^2.1",
-    "ergebnis/composer-normalize": "^2.47",
-    "friendsofphp/php-cs-fixer": "^3.82",
-    "helhum/typo3-console": "^8.2",
-    "helmich/typo3-typoscript-lint": "^3.3",
-    "phpstan/phpstan-deprecation-rules": "^2.0",
-    "phpstan/phpstan-strict-rules": "^2.0",
-    "roave/security-advisories": "dev-latest",
-    "saschaegerer/phpstan-typo3": "^2.1",
-    "shipmonk/composer-dependency-analyser": "^1.8",
-    "spaze/phpstan-disallowed-calls": "^4.5",
-    "ssch/typo3-rector": "^3.5",
-    "tomasvotruba/type-coverage": "^2.0",
-    "typo3/cms-base-distribution": "^13.4",
-    "typo3/cms-lowlevel": "^13.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "MoveElevator\\Typo3Toolbox\\": "Classes"
-    }
-  },
-  "config": {
-    "allow-plugins": {
-      "ergebnis/composer-normalize": true,
-      "typo3/class-alias-loader": true,
-      "typo3/cms-composer-installers": true
-    }
-  },
-  "extra": {
-    "typo3/cms": {
-      "extension-key": "typo3-toolbox"
-    }
-  },
-  "scripts": {
-    "fix": [
-      "@fix:composer",
-      "@fix:editorconfig",
-      "@fix:php:fixer",
-      "@fix:yaml",
-      "@fix:typoscript",
-      "@fix:php:stan",
-      "@fix:php:rector"
-    ],
-    "fix:composer": "@composer normalize --no-check-lock",
-    "fix:editorconfig": "ec --strict --fix --git-only -n",
-    "fix:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix",
-    "fix:php:rector": "rector",
-    "fix:php:stan": "php vendor/bin/phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=2G -vvv",
-    "fix:typoscript": "typoscript-lint",
-    "fix:xml": "",
-    "fix:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
-    "lint": [
-      "@lint:composer",
-      "@lint:composer:dependencies",
-      "@lint:editorconfig",
-      "@lint:php",
-      "@lint:yaml",
-      "@lint:typoscript",
-      "@lint:php:stan",
-      "@lint:php:rector",
-      "@lint:php:fixer"
-    ],
-    "lint:composer": "@composer normalize --no-check-lock --dry-run",
-    "lint:composer:dependencies": "composer-dependency-analyser",
-    "lint:editorconfig": "ec --strict --git-only -n",
-    "lint:php": "find *.php . -name '*.php' ! -path './vendor/*'  ! -path './var/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' ! -path '*node_modules/*' -print0 | xargs -0 -n 1 -P 4 php -l",
-    "lint:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
-    "lint:php:rector": "rector --dry-run",
-    "lint:php:stan": "php vendor/bin/phpstan --no-progress --error-format=checkstyle > phpstan.xml || true",
-    "lint:typoscript": "typoscript-lint --fail-on-warnings",
-    "lint:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
-  }
+	"name": "move-elevator/typo3-toolbox",
+	"description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
+	"type": "typo3-cms-extension",
+	"require": {
+		"php": "^8.4",
+		"doctrine/dbal": "^4.2",
+		"networkteam/sentry-client": "^5.2",
+		"psr/http-factory": "^1.1",
+		"psr/http-message": "^2.0",
+		"psr/http-server-handler": "^1.0",
+		"psr/http-server-middleware": "^1.0",
+		"psr/log": "^3.0",
+		"typo3/cms-backend": "^13.4",
+		"typo3/cms-core": "^13.4",
+		"typo3/cms-frontend": "^13.4",
+		"typo3fluid/fluid": "^4.3"
+	},
+	"require-dev": {
+		"armin/editorconfig-cli": "^2.1",
+		"ergebnis/composer-normalize": "^2.47",
+		"friendsofphp/php-cs-fixer": "^3.82",
+		"helhum/typo3-console": "^8.2",
+		"helmich/typo3-typoscript-lint": "^3.3",
+		"phpstan/phpstan-deprecation-rules": "^2.0",
+		"phpstan/phpstan-strict-rules": "^2.0",
+		"roave/security-advisories": "dev-latest",
+		"saschaegerer/phpstan-typo3": "^2.1",
+		"shipmonk/composer-dependency-analyser": "^1.8",
+		"spaze/phpstan-disallowed-calls": "^4.5",
+		"ssch/typo3-rector": "^3.5",
+		"tomasvotruba/type-coverage": "^2.0",
+		"typo3/cms-base-distribution": "^13.4",
+		"typo3/cms-lowlevel": "^13.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"MoveElevator\\Typo3Toolbox\\": "Classes"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"ergebnis/composer-normalize": true,
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "typo3-toolbox"
+		}
+	},
+	"scripts": {
+		"fix": [
+			"@fix:composer",
+			"@fix:editorconfig",
+			"@fix:yaml",
+			"@fix:typoscript",
+			"@fix:php:stan",
+			"@fix:php:rector",
+			"@fix:php:fixer"
+		],
+		"fix:composer": "@composer normalize --no-check-lock",
+		"fix:editorconfig": "ec --strict --fix --git-only -n",
+		"fix:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix",
+		"fix:php:rector": "rector",
+		"fix:php:stan": "php vendor/bin/phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=2G -vvv",
+		"fix:typoscript": "typoscript-lint",
+		"fix:xml": "",
+		"fix:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
+		"lint": [
+			"@lint:composer",
+			"@lint:composer:dependencies",
+			"@lint:editorconfig",
+			"@lint:php",
+			"@lint:yaml",
+			"@lint:typoscript",
+			"@lint:php:stan",
+			"@lint:php:rector",
+			"@lint:php:fixer"
+		],
+		"lint:composer": "@composer normalize --no-check-lock --dry-run",
+		"lint:composer:dependencies": "composer-dependency-analyser",
+		"lint:editorconfig": "ec --strict --git-only -n",
+		"lint:php": "find *.php . -name '*.php' ! -path './vendor/*'  ! -path './var/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' ! -path '*node_modules/*' -print0 | xargs -0 -n 1 -P 4 php -l",
+		"lint:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
+		"lint:php:rector": "rector --dry-run",
+		"lint:php:stan": "php vendor/bin/phpstan --no-progress --error-format=checkstyle > phpstan.xml || true",
+		"lint:typoscript": "typoscript-lint --fail-on-warnings",
+		"lint:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
+	}
 }

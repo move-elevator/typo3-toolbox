@@ -1,23 +1,23 @@
 {
-  "name": "@move-elevator/typo3-toolbox",
-  "version": "0.1.0",
-  "description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
-  "scripts": {
-    "build": "esbuild Resources/Private/JavaScript/Service/SentryMonitoringService.js --bundle --minify --outfile=Resources/Public/JavaScript/Service/SentryMonitoringService.min.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/move-elevator/typo3-toolbox.git"
-  },
-  "license": "GPL-2.0-or-later",
-  "bugs": {
-    "url": "https://github.com/move-elevator/typo3-toolbox/issues"
-  },
-  "homepage": "https://github.com/move-elevator/typo3-toolbox#readme",
-  "dependencies": {
-    "@sentry/browser": "^9.38.0"
-  },
-  "devDependencies": {
-    "esbuild": "^0.25.6"
-  }
+	"name": "@move-elevator/typo3-toolbox",
+	"version": "0.1.0",
+	"description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
+	"scripts": {
+		"build": "esbuild Resources/Private/JavaScript/Service/SentryMonitoringService.js --bundle --minify --outfile=Resources/Public/JavaScript/Service/SentryMonitoringService.min.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/move-elevator/typo3-toolbox.git"
+	},
+	"license": "GPL-2.0-or-later",
+	"bugs": {
+		"url": "https://github.com/move-elevator/typo3-toolbox/issues"
+	},
+	"homepage": "https://github.com/move-elevator/typo3-toolbox#readme",
+	"dependencies": {
+		"@sentry/browser": "^9.38.0"
+	},
+	"devDependencies": {
+		"esbuild": "^0.25.6"
+	}
 }

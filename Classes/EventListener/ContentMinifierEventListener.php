@@ -18,16 +18,16 @@ final class ContentMinifierEventListener
     }
 
     /**
-     * remove javascript inline comments
-     * convert linebreaks to spaces
-     * convert tabs to spaces
-     * convert multiple spaces to one single space
-     * remove spaces between tags, but ignore on some inline-tags
-     * replace non-HTML5 conform closing tags
-     * remove type attributes for styles and javascript
-     * remove unnecessary whitespaces from class attributes
-     * remove unnecessary whitespaces from JSON-LD
-     */
+    * remove javascript inline comments
+    * convert linebreaks to spaces
+    * convert tabs to spaces
+    * convert multiple spaces to one single space
+    * remove spaces between tags, but ignore on some inline-tags
+    * replace non-HTML5 conform closing tags
+    * remove type attributes for styles and javascript
+    * remove unnecessary whitespaces from class attributes
+    * remove unnecessary whitespaces from JSON-LD
+    */
     private function minify(string $content): string
     {
         $replacements = [
