@@ -34,20 +34,10 @@ abstract class AbstractRepository
         return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
     }
 
-    public function getAllByFieldValue(string $field, $value, array $columns = ['*']): array
-    {
-        $queryBuilder = $this->getQueryBuilder();
-
-        return $queryBuilder
-            ->select(...$columns)
-            ->from($this->getTableName())
-            ->where(
-                $queryBuilder->expr()->eq($field, $queryBuilder->createNamedParameter($value))
-            )
-            ->executeQuery()
-            ->fetchAllAssociative();
-    }
-
+    /**
+    * @param string[] $columns
+    * @return mixed[]
+    */
     public function findAll(array $columns = ['*'], string $orderBy = 'uid', int $limit = 0): array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -63,6 +53,10 @@ abstract class AbstractRepository
         return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 
+    /**
+    * @param string[] $columns
+    * @return mixed[]
+    */
     public function findById(int $id, array $columns = ['*']): array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -82,6 +76,9 @@ abstract class AbstractRepository
         $this->getConnection()->delete($this->getTableName(), ['uid' => $id]);
     }
 
+    /**
+    * @param mixed[] $values
+    */
     public function insert(array $values): int
     {
         return $this->getQueryBuilder()->insert($this->getTableName())->values($values)->executeStatement();

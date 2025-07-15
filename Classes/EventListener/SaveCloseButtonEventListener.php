@@ -26,9 +26,11 @@ final class SaveCloseButtonEventListener
         if ($saveButton instanceof InputButton) {
             $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
             $language = $this->getLanguageService();
-            $title = $language ? $language->sL(
-                'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveCloseDoc'
-            ) : 'save';
+            $title = 'save';
+
+            if ($language instanceof LanguageService) {
+                $title = $language->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveCloseDoc');
+            }
 
             $saveCloseButton = $buttonBar->makeInputButton()
                 ->setName('_saveandclosedok')

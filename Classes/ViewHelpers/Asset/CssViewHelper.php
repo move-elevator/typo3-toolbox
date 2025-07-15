@@ -50,8 +50,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         $identifier = (string)$this->arguments['identifier'];
         $attributes = $this->tag->getAttributes();
 
-        // boolean attributes shall output attr="attr" if set
-        if ($attributes['disabled'] ?? false) {
+        if ((bool)($attributes['disabled'] ?? false)) {
             $attributes['disabled'] = 'disabled';
         }
 
@@ -64,7 +63,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         ];
 
         if (null !== $file) {
-            if ($this->arguments['inline'] ?? false) {
+            if ((bool)($this->arguments['inline'] ?? false)) {
                 $content = @file_get_contents(GeneralUtility::getFileAbsFileName(trim($file)));
 
                 if (false !== $content) {

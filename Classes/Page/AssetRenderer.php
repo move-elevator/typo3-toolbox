@@ -32,7 +32,7 @@ readonly class AssetRenderer extends \TYPO3\CMS\Core\Page\AssetRenderer
             }
         }
 
-        if (false === empty($noScripts)) {
+        if (count($noScripts) > 0) {
             $return .= '<noscript>';
 
             foreach ($noScripts as $file) {
