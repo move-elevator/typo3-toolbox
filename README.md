@@ -55,6 +55,20 @@ For example:
 />
 ```
 
+Sentry monitoring is enabled by default for frontend and backend issue/ performance tracking, but can be disabled via the extension configuration if required.
+
+Disable backend issue tracking:
+
+```
+$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3-toolbox']['sentryBackendEnabled'] = 0;
+```
+
+Disable frontend issue/ performance tracking:
+
+```
+$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3-toolbox']['sentryFrontendEnabled'] = 0;
+```
+
 ## Documentation
 
 ### Middlewares
