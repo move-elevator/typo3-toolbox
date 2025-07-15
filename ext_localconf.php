@@ -15,13 +15,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
     $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(Configuration::EXT_KEY->value);
     if ((bool)($extConf['sentryBackendEnabled'] ?? false)) {
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'] = [
-            LogLevel::ERROR => [
-                SentryClient\SentryLogWriter::class => [],
-            ],
-        ];
-
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = SentryClient\DebugExceptionHandler::class;
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'][LogLevel::ERROR][SentryClient\SentryLogWriter::class] = [];
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = SentryClient\ProductionExceptionHandler::class;
     }
 })();
