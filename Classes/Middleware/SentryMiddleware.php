@@ -29,6 +29,10 @@ final readonly class SentryMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
+        if ('GET' !== $request->getMethod()) {
+            return $handler->handle($request);
+        }
+
         if (Route::API_SENTRY->value !== $request->getUri()->getPath()) {
             return $handler->handle($request);
         }
