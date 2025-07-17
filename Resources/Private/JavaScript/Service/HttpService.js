@@ -35,7 +35,7 @@ class HttpService {
 
     try {
       return await response.json()
-    } catch (error) {
+    } catch {
       throw new Error('Invalid JSON response')
     }
   }

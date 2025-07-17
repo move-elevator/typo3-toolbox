@@ -114,6 +114,23 @@
 						]
 					}
 				]
+			},
+			{
+				"action": "npm run lint",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["js", "mjs"]
+						]
+					},
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
+						"args": [
+							"/"
+						]
+					}
+				]
 			}
 		]
 	},
