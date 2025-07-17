@@ -17,23 +17,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Setup DDEV
       - name: Setup DDEV
         uses: ddev/github-action-setup-ddev@v1
         with:
           autostart: false
 
-      # Install dependencies
-      - name: Install Composer dependencies
+      - name: Install dependencies
         run: |
           ddev start
           ddev composer install
+          ddev npm i
 
       - name: Composer audit
         run: ddev composer audit
 
       - name: Run static code analysis
-        run: ddev composer lint
+        run: |
+          ddev composer lint
+          ddev npm run lint
 
       - uses: staabm/annotate-pull-request-from-checkstyle-action@v1
         name: Annotate PHP CS Fixer
