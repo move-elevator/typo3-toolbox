@@ -65,9 +65,9 @@
 		"fix:editorconfig": "ec --strict --fix --git-only -n",
 		"fix:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix",
 		"fix:php:rector": "rector",
-		"fix:php:stan": "php vendor/bin/phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=2G -vvv",
+		"fix:php:stan": "php vendor/bin/phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=-1 -vvv",
 		"fix:typoscript": "typoscript-lint",
-		"fix:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
+		"fix:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"lint": [
 			"@lint:composer",
 			"@lint:composer:dependencies",
@@ -82,11 +82,11 @@
 		"lint:composer": "@composer normalize --no-check-lock --dry-run",
 		"lint:composer:dependencies": "composer-dependency-analyser",
 		"lint:editorconfig": "ec --strict --git-only -n",
-		"lint:php": "find *.php . -name '*.php' ! -path './vendor/*'  ! -path './var/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' ! -path '*node_modules/*' -print0 | xargs -0 -n 1 -P 4 php -l",
+		"lint:php": "find *.php . -name '*.php' ! -path '*node_modules/*' ! -path './var/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' -print0 | xargs -0 -n 1 -P 4 php -l",
 		"lint:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
 		"lint:php:rector": "rector --dry-run",
 		"lint:php:stan": "php vendor/bin/phpstan --no-progress --error-format=checkstyle > phpstan.xml || true",
 		"lint:typoscript": "typoscript-lint --fail-on-warnings",
-		"lint:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
+		"lint:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
 	}
 }
