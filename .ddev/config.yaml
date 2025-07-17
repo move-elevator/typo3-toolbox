@@ -9,7 +9,13 @@ additional_fqdns: []
 database:
   type: mariadb
   version: "11.4"
-webimage_extra_packages: [libxml2-utils]
+hooks:
+  post-start:
+    - exec: if [ ! -d /var/www/html/vendor ]; then composer i; fi
+    - exec: if [ ! -d /var/www/html/node_modules ]; then npm i; fi
+    - exec: if [ -d /var/www/html/vendor/captainhook ]; then vendor/bin/captainhook install pre-commit -f; fi
+webimage_extra_packages: [ libxml2-utils ]
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
+corepack_enable: false

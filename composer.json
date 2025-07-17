@@ -18,6 +18,7 @@
 	},
 	"require-dev": {
 		"armin/editorconfig-cli": "^2.1",
+		"captainhook/captainhook": "^5.25",
 		"ergebnis/composer-normalize": "^2.47",
 		"friendsofphp/php-cs-fixer": "^3.82",
 		"helhum/typo3-console": "^8.2",
@@ -27,8 +28,8 @@
 		"roave/security-advisories": "dev-latest",
 		"saschaegerer/phpstan-typo3": "^2.1",
 		"shipmonk/composer-dependency-analyser": "^1.8",
-		"spaze/phpstan-disallowed-calls": "^4.5",
-		"ssch/typo3-rector": "^3.5",
+		"spaze/phpstan-disallowed-calls": "^4.6",
+		"ssch/typo3-rector": "^3.6",
 		"tomasvotruba/type-coverage": "^2.0",
 		"typo3/cms-base-distribution": "^13.4",
 		"typo3/cms-lowlevel": "^13.4"
@@ -66,7 +67,6 @@
 		"fix:php:rector": "rector",
 		"fix:php:stan": "php vendor/bin/phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=2G -vvv",
 		"fix:typoscript": "typoscript-lint",
-		"fix:xml": "",
 		"fix:yaml": "find ./ ! -path './vendor/*' ! -path '*/node_modules/*' ! -path './.Build/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"lint": [
 			"@lint:composer",

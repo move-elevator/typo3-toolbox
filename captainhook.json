@@ -1,0 +1,144 @@
+{
+	"config": {
+		"bootstrap": "./vendor/autoload.php",
+		"git-directory": "/var/www/html/.git/",
+		"verbosity": "verbose",
+		"run": {
+			"mode": "docker",
+			"exec": "ddev exec",
+			"path": "/var/www/html/vendor/bin/captainhook"
+		}
+	},
+	"commit-msg": {
+		"enabled": false,
+		"actions": []
+	},
+	"pre-push": {
+		"enabled": false,
+		"actions": []
+	},
+	"pre-commit": {
+		"enabled": true,
+		"actions": [
+			{
+				"action": "composer lint:editorconfig",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
+						"args": [
+							"/"
+						]
+					}
+				]
+			},
+			{
+				"action": "composer lint:yaml",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["yaml","yml"]
+						]
+					}
+				]
+			},
+			{
+				"action": "composer lint:php",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["php"]
+						]
+					}
+				]
+			},
+			{
+				"action": "composer lint:composer",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
+						"args": [
+							["composer.json"]
+						]
+					}
+				]
+			},
+			{
+				"action": "vendor/bin/rector process --dry-run {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["php"]
+						]
+					},
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
+						"args": [
+							"/"
+						]
+					}
+				]
+			},
+			{
+				"action": "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php -v --dry-run --using-cache=no --diff {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["php"]
+						]
+					},
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
+						"args": [
+							"/"
+						]
+					}
+				]
+			},
+			{
+				"action": "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1",
+				"conditions": [
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+						"args": [
+							["php"]
+						]
+					},
+					{
+						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
+						"args": [
+							"/"
+						]
+					}
+				]
+			}
+		]
+	},
+	"prepare-commit-msg": {
+		"enabled": false,
+		"actions": []
+	},
+	"post-commit": {
+		"enabled": false,
+		"actions": []
+	},
+	"post-merge": {
+		"enabled": false,
+		"actions": []
+	},
+	"post-checkout": {
+		"enabled": false,
+		"actions": []
+	},
+	"post-rewrite": {
+		"enabled": false,
+		"actions": []
+	},
+	"post-change": {
+		"enabled": false,
+		"actions": []
+	}
+}
