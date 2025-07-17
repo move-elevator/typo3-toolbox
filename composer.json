@@ -54,11 +54,11 @@
 	"scripts": {
 		"fix": [
 			"@fix:composer",
-			"@fix:editorconfig",
 			"@fix:yaml",
 			"@fix:typoscript",
 			"@fix:php:stan",
 			"@fix:php:rector",
+			"@fix:editorconfig",
 			"@fix:php:fixer"
 		],
 		"fix:composer": "@composer normalize --no-check-lock",

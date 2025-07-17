@@ -4,8 +4,8 @@ parameters:
 			message: '''
 				#^Access to property \$content of deprecated class TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController\:
 				since TYPO3 v13, will vanish during v14 development\. There are some
-				remaining internal usages that can be adapted without further \.rst
-				files\. The class should vanish together with \$GLOBALS\['TSFE'\] in v14\.$#
+										remaining internal usages that can be adapted without further \.rst
+										files\. The class should vanish together with \$GLOBALS\['TSFE'\] in v14\.$#
 			'''
 			identifier: property.deprecatedClass
 			count: 2
