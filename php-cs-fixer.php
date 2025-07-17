@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 $finder = new PhpCsFixer\Finder()
+    ->exclude('node_modules')
     ->ignoreVCSIgnored(true)
     ->in(realpath(__DIR__));
 
