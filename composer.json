@@ -85,7 +85,7 @@
 		"lint:php": "find *.php . -name '*.php' ! -path '*node_modules/*' ! -path './var/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' -print0 | xargs -0 -n 1 -P 4 php -l",
 		"lint:php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
 		"lint:php:rector": "rector --dry-run",
-		"lint:php:stan": "php vendor/bin/phpstan --no-progress --error-format=checkstyle > phpstan.xml || true",
+		"lint:php:stan": "php vendor/bin/phpstan analyse --no-progress --error-format=checkstyle --memory-limit=-1 --configuration=phpstan.neon > phpstan.xml || true",
 		"lint:typoscript": "typoscript-lint --fail-on-warnings",
 		"lint:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
 	}
