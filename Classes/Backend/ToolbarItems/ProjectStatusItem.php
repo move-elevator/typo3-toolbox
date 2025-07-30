@@ -4,6 +4,7 @@ namespace MoveElevator\Typo3Toolbox\Backend\ToolbarItems;
 
 use MoveElevator\Typo3Toolbox\Enumeration\Configuration;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,9 +30,11 @@ class ProjectStatusItem implements ToolbarItemInterface
     */
     public function getItem(): string
     {
-        if (!(bool)($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['toolbarItem']['enable'] ?? false)) {
+        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(Configuration::EXT_KEY->value);
+        if (!(bool)($extConf['backendVersionToolbar'] ?? false)) {
             return '';
         }
+
 
         $viewFactoryData = new ViewFactoryData(
             templateRootPaths: ['EXT:' . Configuration::EXT_KEY->value . '/Resources/Private/Templates/'],
