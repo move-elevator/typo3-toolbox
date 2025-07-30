@@ -9,6 +9,9 @@
 			<trans-unit id="extension_manager.sentry_frontend_enabled">
 				<source>Enables the Sentry credential data middleware entrypoint "/api/sentry" which will be used for Sentry JavaScript service class.</source>
 			</trans-unit>
+			<trans-unit id="extension_manager.backend_version_toolbar">
+				<source>Enables the backend version toolbar item, showing the current project version.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
