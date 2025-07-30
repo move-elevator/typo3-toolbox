@@ -17,7 +17,7 @@ class LastDeploymentEventListener
     public function __invoke(SystemInformationToolbarCollectorEvent $systemInformation): void
     {
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(Configuration::EXT_KEY->value);
-        if ((bool)($extConf['systemInformationLastUpdated'] ?? false)) {
+        if (!(bool)($extConf['systemInformationLastUpdated'] ?? false)) {
             return;
         }
         $path = GeneralUtility::getFileAbsFileName($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['systemInformationToolbar']['fileToCheck']);
