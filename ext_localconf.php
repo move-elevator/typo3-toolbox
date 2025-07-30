@@ -19,4 +19,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'][LogLevel::ERROR][SentryClient\SentryLogWriter::class] = [];
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = SentryClient\ProductionExceptionHandler::class;
     }
+
+    $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['systemInformationToolbar']['fileToCheck'] = 'index.php';
 })();

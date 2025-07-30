@@ -12,7 +12,7 @@ parameters:
 			path: Classes/EventListener/ContentMinifierEventListener.php
 
 		-
-			message: '#^Out of 29 possible param types, only 24 \- 82\.7 %% actually have it\. Add more param types to get over 95 %%$#'
+			message: '#^Out of 31 possible param types, only 26 \- 83\.8 %% actually have it\. Add more param types to get over 95 %%$#'
 			identifier: typeCoverage.paramTypeCoverage
 			count: 2
 			path: Classes/EventListener/ContentMinifierEventListener.php
@@ -30,7 +30,7 @@ parameters:
 			path: Classes/ViewHelpers/Asset/CssViewHelper.php
 
 		-
-			message: '#^Out of 29 possible param types, only 24 \- 82\.7 %% actually have it\. Add more param types to get over 95 %%$#'
+			message: '#^Out of 31 possible param types, only 26 \- 83\.8 %% actually have it\. Add more param types to get over 95 %%$#'
 			identifier: typeCoverage.paramTypeCoverage
 			count: 3
 			path: Classes/ViewHelpers/Asset/CssViewHelper.php
