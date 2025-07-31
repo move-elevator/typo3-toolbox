@@ -12,8 +12,8 @@ final class ContentMinifierEventListener
 {
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        $event->getController()->content = $this->minify(
-            $event->getController()->content
+        $event->getController()->content = $this->minify( // @phpstan-ignore-line
+            $event->getController()->content // @phpstan-ignore-line
         );
     }
 
@@ -52,7 +52,7 @@ final class ContentMinifierEventListener
 
         $content = (string)preg_replace_callback(
             '/class="([^"]+)"/',
-            static function ($matches) {
+            static function (array $matches) {
                 $cleanedClassList = trim(preg_replace('/\s+/', ' ', $matches[1]));
                 return 'class="' . $cleanedClassList . '"';
             },
@@ -61,9 +61,9 @@ final class ContentMinifierEventListener
 
         $content = (string)preg_replace_callback(
             '/<script\s+type="application\/ld\+json">(.*?)<\/script>/s',
-            static function ($matches) {
+            static function (array $matches) {
                 $json = trim($matches[1]);
-                $minifiedJson = json_encode(json_decode($json, true), JSON_UNESCAPED_SLASHES);
+                $minifiedJson = json_encode(json_decode($json, true), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 
                 if ('null' === $minifiedJson) {
                     return '';
