@@ -24,7 +24,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         // Add a tag builder, that does not html encode values, because rendering with encoding happens in AssetRenderer
         $this->setTagBuilder(
             new class () extends TagBuilder {
-                public function addAttribute($attributeName, $attributeValue, $escapeSpecialCharacters = false): void
+                public function addAttribute($attributeName, $attributeValue, $escapeSpecialCharacters = false): void // @phpstan-ignore-line typeCoverage.paramTypeCoverage
                 {
                     parent::addAttribute($attributeName, $attributeValue, false);
                 }
