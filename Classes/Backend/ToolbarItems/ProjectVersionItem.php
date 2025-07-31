@@ -48,7 +48,7 @@ class ProjectVersionItem implements ToolbarItemInterface
             'version' => $this->getWebsiteVersion(),
         ]);
 
-        return $view->render('ToolbarItems/ProjectVersionItem.htm');
+        return $view->render('ToolbarItems/ProjectVersionItem.html');
     }
 
     /**
