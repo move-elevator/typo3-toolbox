@@ -21,10 +21,15 @@ class LastDeploymentEventListener
             return;
         }
         $path = GeneralUtility::getFileAbsFileName($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['systemInformationToolbar']['fileToCheck']);
+        if (empty($path) || !file_exists($path)) {
+            return;
+        }
+
         $lastModified = $this->getLastModifiedTime($path);
         if (class_exists(\IntlDateFormatter::class)) {
+            $locale = $GLOBALS['TYPO3_CONF_VARS']['SYS']['locale'] ?? \Locale::getDefault();
             $formatter = new \IntlDateFormatter(
-                'de-DE',
+                $locale,
                 \IntlDateFormatter::FULL,
                 \IntlDateFormatter::FULL,
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? date_default_timezone_get(),
@@ -36,7 +41,7 @@ class LastDeploymentEventListener
         }
 
         $systemInformation->getToolbarItem()->addSystemInformation(
-            $this->getLanguageService()->sL('LLL:EXT:' . Configuration::EXT_KEY ->value. '/Resources/Private/Language/locallang_be.xlf:system_information.last_updated'),
+            $this->getLanguageService()->sL('LLL:EXT:' . Configuration::EXT_KEY->value . '/Resources/Private/Language/locallang_be.xlf:system_information.last_updated'),
             $humanFormatDateTime,
             'actions-refresh',
         );
@@ -46,15 +51,25 @@ class LastDeploymentEventListener
     {
         $lastModifiedTime = 0;
 
+        if (!file_exists($path)) {
+            return $lastModifiedTime;
+        }
+
         if (is_dir($path)) {
-            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
-            foreach ($iterator as $fileinfo) {
-                if ($fileinfo->isFile() && $fileinfo->getMTime() > $lastModifiedTime) {
-                    $lastModifiedTime = $fileinfo->getMTime();
+            try {
+                $iterator = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS)
+                );
+                foreach ($iterator as $fileinfo) {
+                    if ($fileinfo->isFile() && $fileinfo->getMTime() > $lastModifiedTime) {
+                        $lastModifiedTime = $fileinfo->getMTime();
+                    }
                 }
+            } catch (\Exception $e) {
+                return filemtime($path) ?: 0;
             }
         } elseif (is_file($path)) {
-            $lastModifiedTime = filemtime($path);
+            $lastModifiedTime = filemtime($path) ?: 0;
         }
 
         return $lastModifiedTime;
