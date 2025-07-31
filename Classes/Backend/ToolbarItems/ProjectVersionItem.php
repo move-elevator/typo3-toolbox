@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
-class ProjectStatusItem implements ToolbarItemInterface
+class ProjectVersionItem implements ToolbarItemInterface
 {
     /**
     * Checks whether the user has access to this toolbar item
@@ -56,7 +56,8 @@ class ProjectStatusItem implements ToolbarItemInterface
     */
     protected function getWebsiteVersion(): string
     {
-        return GeneralUtility::makeInstance(PackageManager::class)->getComposerManifest(Environment::getProjectPath() . '/', true)->version ?? '';
+        $manifest = GeneralUtility::makeInstance(PackageManager::class)->getComposerManifest(Environment::getProjectPath() . '/', true);
+        return $manifest?->version ?? '';
     }
 
     /**
