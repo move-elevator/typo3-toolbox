@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 #[AsEventListener(identifier: 'moveElevator/backend/lastUpdated')]
 class LastDeploymentEventListener
@@ -21,7 +22,7 @@ class LastDeploymentEventListener
             return;
         }
         $path = GeneralUtility::getFileAbsFileName($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['systemInformationToolbar']['fileToCheck']);
-        if (empty($path) || !file_exists($path)) {
+        if ($path !== '' || !file_exists($path)) {
             return;
         }
 
@@ -32,7 +33,7 @@ class LastDeploymentEventListener
                 $locale,
                 \IntlDateFormatter::FULL,
                 \IntlDateFormatter::FULL,
-                $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? date_default_timezone_get(),
+                $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] !== '' ? $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] : (date_default_timezone_get() !== '' ? date_default_timezone_get() : 'Europe/Berlin'),
                 \IntlDateFormatter::GREGORIAN
             );
             $humanFormatDateTime = $formatter->format($lastModified);
@@ -66,10 +67,10 @@ class LastDeploymentEventListener
                     }
                 }
             } catch (\Exception $e) {
-                return filemtime($path) ?: 0;
+                return filemtime($path) !== false ? filemtime($path) : 0;
             }
         } elseif (is_file($path)) {
-            $lastModifiedTime = filemtime($path) ?: 0;
+            $lastModifiedTime = filemtime($path) !== false ? filemtime($path) : 0;
         }
 
         return $lastModifiedTime;
