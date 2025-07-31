@@ -57,7 +57,7 @@ class ProjectVersionItem implements ToolbarItemInterface
     protected function getWebsiteVersion(): string
     {
         $manifest = GeneralUtility::makeInstance(PackageManager::class)->getComposerManifest(Environment::getProjectPath() . '/', true);
-        return $manifest?->version ?? '';
+        return $manifest->version ?? '';
     }
 
     /**
