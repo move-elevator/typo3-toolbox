@@ -12,8 +12,8 @@ final class ContentMinifierEventListener
 {
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        $event->getController()->content = $this->minify(
-            $event->getController()->content
+        $event->getController()->content = $this->minify( // @phpstan-ignore-line
+            $event->getController()->content // @phpstan-ignore-line
         );
     }
 
