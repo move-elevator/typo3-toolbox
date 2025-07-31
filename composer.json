@@ -4,6 +4,7 @@
 	"type": "typo3-cms-extension",
 	"require": {
 		"php": "^8.4",
+		"ext-intl": "*",
 		"doctrine/dbal": "^4.2",
 		"networkteam/sentry-client": "^5.2",
 		"psr/http-factory": "^1.1",

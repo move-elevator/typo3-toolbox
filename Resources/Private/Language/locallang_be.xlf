@@ -12,6 +12,12 @@
 			<trans-unit id="extension_manager.backend_version_toolbar">
 				<source>Enables the backend version toolbar item, showing the current project version.</source>
 			</trans-unit>
+			<trans-unit id="extension_manager.system_information_last_updated">
+				<source>Enables system information entry for last updated date.</source>
+			</trans-unit>
+			<trans-unit id="system_information.last_updated">
+				<source>Last Update</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

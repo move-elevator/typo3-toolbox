@@ -6,3 +6,6 @@ sentryFrontendEnabled = 1
 
 # cat=backend/enable/10; type=boolean; label=LLL:EXT:typo3-toolbox/Resources/Private/Language/locallang_be.xlf:extension_manager.backend_version_toolbar
 backendVersionToolbar = 1
+
+# cat=backend/enable/20; type=boolean; label=LLL:EXT:typo3-toolbox/Resources/Private/Language/locallang_be.xlf:extension_manager.system_information_last_updated
+systemInformationLastUpdated = 1
