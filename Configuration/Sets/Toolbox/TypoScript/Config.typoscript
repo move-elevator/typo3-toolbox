@@ -1,0 +1,1 @@
+config.pageRendererTemplateFile = EXT:typo3-toolbox/Resources/Private/Templates/PageView/Pages/Renderer.html
