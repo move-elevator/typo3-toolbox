@@ -6,5 +6,5 @@ namespace MoveElevator\Typo3Toolbox\Enumeration;
 
 enum Configuration: string
 {
-    case EXT_KEY = 'typo3-toolbox';
+    case EXT_KEY = 'typo3_toolbox';
 }

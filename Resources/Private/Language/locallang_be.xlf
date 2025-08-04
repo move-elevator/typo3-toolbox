@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" product-name="typo3-toolbox">
+	<file source-language="en" datatype="plaintext" original="messages" product-name="typo3_toolbox">
 		<header/>
 		<body>
 			<trans-unit id="extension_manager.sentry_backend_enabled">

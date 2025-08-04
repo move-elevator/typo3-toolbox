@@ -52,7 +52,7 @@ For example:
     identifier="sentryMonitoringService"
     nonce="{f:security.nonce()}"
     priority="1"
-    src="EXT:typo3-toolbox/Resources/Public/JavaScript/Service/SentryMonitoringService.min.js"
+    src="EXT:typo3_toolbox/Resources/Public/JavaScript/Service/SentryMonitoringService.min.js"
 />
 ```
 
@@ -61,13 +61,13 @@ Sentry monitoring is enabled by default for frontend and backend issue/ performa
 Disable backend issue tracking:
 
 ```
-$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3-toolbox']['sentryBackendEnabled'] = 0;
+$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_toolbox']['sentryBackendEnabled'] = 0;
 ```
 
 Disable frontend issue/ performance tracking:
 
 ```
-$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3-toolbox']['sentryFrontendEnabled'] = 0;
+$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_toolbox']['sentryFrontendEnabled'] = 0;
 ```
 
 ## Documentation
