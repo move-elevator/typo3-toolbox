@@ -42,6 +42,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument('identifier', 'string', 'Use this identifier within templates to only inject your CSS once, even though it is added multiple times.', true);
         $this->registerArgument('priority', 'boolean', 'Define whether the CSS should be included before other CSS. CSS will always be output in the <head> tag.', false, false);
         $this->registerArgument('inline', 'bool', 'Define whether or not the referenced file should be loaded as inline styles (Only to be used if \'href\' is set).', false, false);
+        $this->registerArgument('inlineReplacements', 'array', 'Defines a key-value-based array of replacements for inline styles rendering, where the keys are replaced by values.', false, []);
         $this->registerArgument('noscript', 'boolean', 'Renders a noscript tag with the given file', false, false);
     }
 
@@ -62,24 +63,38 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
             'noscript' => (bool)($this->arguments['noscript'] ?? false),
         ];
 
-        if (null !== $file) {
-            if ((bool)($this->arguments['inline'] ?? false)) {
-                $content = @file_get_contents(GeneralUtility::getFileAbsFileName(trim($file)));
-
-                if (false !== $content) {
-                    $this->assetCollector->addInlineStyleSheet($identifier, $content, $attributes, $options);
-                }
-            } else {
-                $this->assetCollector->addStyleSheet($identifier, $file, $attributes, $options);
+        if ($file === null) {
+            $content = (string)$this->renderChildren();
+            if ($content !== '') {
+                $processedContent = $this->processStyleContent($content);
+                $this->assetCollector->addInlineStyleSheet($identifier, $processedContent, $attributes, $options);
+            }
+        } elseif ((bool)($this->arguments['inline'] ?? false)) {
+            $content = @file_get_contents(GeneralUtility::getFileAbsFileName(trim($file)));
+            if ($content !== false) {
+                $processedContent = $this->processStyleContent($content);
+                $this->assetCollector->addInlineStyleSheet($identifier, $processedContent, $attributes, $options);
             }
         } else {
-            $content = (string)$this->renderChildren();
-
-            if ('' !== $content) {
-                $this->assetCollector->addInlineStyleSheet($identifier, $content, $attributes, $options);
-            }
+            $this->assetCollector->addStyleSheet($identifier, $file, $attributes, $options);
         }
 
         return '';
+    }
+
+    private function processStyleContent(string $content): string
+    {
+        if (
+            !isset($this->arguments['inlineReplacements']) ||
+            !is_array($this->arguments['inlineReplacements'])
+        ) {
+            return $content;
+        }
+
+        return str_replace(
+            array_keys($this->arguments['inlineReplacements']),
+            array_values($this->arguments['inlineReplacements']),
+            $content
+        );
     }
 }
