@@ -72,12 +72,6 @@
 						"args": [
 							["php"]
 						]
-					},
-					{
-						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
-						"args": [
-							"/"
-						]
 					}
 				]
 			},
@@ -88,12 +82,6 @@
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
 						"args": [
 							["php"]
-						]
-					},
-					{
-						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
-						"args": [
-							"/"
 						]
 					}
 				]
@@ -106,12 +94,6 @@
 						"args": [
 							["php"]
 						]
-					},
-					{
-						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
-						"args": [
-							"/"
-						]
 					}
 				]
 			},
@@ -122,12 +104,6 @@
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
 						"args": [
 							["js", "mjs"]
-						]
-					},
-					{
-						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
-						"args": [
-							"/"
 						]
 					}
 				]
