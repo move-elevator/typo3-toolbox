@@ -15,6 +15,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds an event listener to add save and close button
 - Adds a xClass for TYPO3 asset collector which will automatically render `noscript` tags beside CSS link tags, which can be adopted to optimize CSS preloading (see: https://web.dev/articles/defer-non-critical-css)
 - Adds a view helper which can return the uid of the first content element on a page X
+- Adds a CSS view helper that enables the rendering of a `noscript` variant and allows inline styles to be replaced by a key-value-based `inlineReplacements` option flag
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
 
