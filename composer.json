@@ -1,6 +1,7 @@
 {
 	"name": "move-elevator/typo3-toolbox",
 	"description": "A TYPO3 toolbox so handy, it makes even missing plugins feel insecure.",
+	"license": "GPL-2.0-or-later",
 	"type": "typo3-cms-extension",
 	"require": {
 		"php": "^8.4",
