@@ -1,5 +1,7 @@
 <div align="center">
 
+![Extension icon](Resources/Public/Icons/Extension.svg)
+
 # TYPO3 extension `typo3_toolbox`
 
 [![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/13/orange)]()
