@@ -9,6 +9,20 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
+/*
+* Usage example:
+*
+* <html xmlns:vh="http://typo3.org/ns/MoveElevator/Typo3Toolbox/ViewHelpers" [...]
+*
+* <vh:asset.css
+    noscript="true"
+    priority="0"
+    identifier="{identifier}"
+    href="{file}"
+    rel="preload"
+    as="style"
+/>
+*/
 final class CssViewHelper extends AbstractTagBasedViewHelper
 {
     protected $escapeChildren = true;
@@ -19,6 +33,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         $this->assetCollector = $assetCollector;
     }
 
+    #[\Override]
     public function initialize(): void
     {
         // Add a tag builder, that does not html encode values, because rendering with encoding happens in AssetRenderer
@@ -34,6 +49,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         parent::initialize();
     }
 
+    #[\Override]
     public function initializeArguments(): void
     {
         parent::initializeArguments();
@@ -46,6 +62,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument('noscript', 'boolean', 'Renders a noscript tag with the given file', false, false);
     }
 
+    #[\Override]
     public function render(): string
     {
         $identifier = (string)$this->arguments['identifier'];
