@@ -55,9 +55,9 @@ abstract class AbstractRepository
 
     /**
     * @param string[] $columns
-    * @return mixed[]
+    * @return mixed[]|false
     */
-    public function findById(int $id, array $columns = ['*']): array
+    public function findById(int $id, array $columns = ['*']): array|false
     {
         $queryBuilder = $this->getQueryBuilder();
 
