@@ -28,11 +28,19 @@ class LastDeploymentEventListener
         $lastModified = $this->getLastModifiedTime($path);
         if (class_exists(\IntlDateFormatter::class)) {
             $locale = $GLOBALS['TYPO3_CONF_VARS']['SYS']['locale'] ?? \Locale::getDefault();
+            $timeZone = 'Europe/Berlin';
+
+            if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone']) && $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] !== '') {
+                $timeZone = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'];
+            } elseif (date_default_timezone_get() !== '') {
+                $timeZone = date_default_timezone_get();
+            }
+
             $formatter = new \IntlDateFormatter(
                 $locale,
                 \IntlDateFormatter::FULL,
                 \IntlDateFormatter::FULL,
-                $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] !== '' ? $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] : (date_default_timezone_get() !== '' ? date_default_timezone_get() : 'Europe/Berlin'),
+                $timeZone,
                 \IntlDateFormatter::GREGORIAN
             );
             $humanFormatDateTime = $formatter->format($lastModified);
@@ -49,30 +57,45 @@ class LastDeploymentEventListener
 
     private function getLastModifiedTime(string $path): int
     {
-        $lastModifiedTime = 0;
-
         if (!file_exists($path)) {
-            return $lastModifiedTime;
+            return 0;
+        }
+
+        if (is_file($path)) {
+            return $this->getFileModificationTime($path);
         }
 
         if (is_dir($path)) {
-            try {
-                $iterator = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS)
-                );
-                foreach ($iterator as $fileinfo) {
-                    if ($fileinfo->isFile() && $fileinfo->getMTime() > $lastModifiedTime) {
-                        $lastModifiedTime = $fileinfo->getMTime();
-                    }
-                }
-            } catch (\Exception $e) {
-                return filemtime($path) !== false ? filemtime($path) : 0;
-            }
-        } elseif (is_file($path)) {
-            $lastModifiedTime = filemtime($path) !== false ? filemtime($path) : 0;
+            return $this->getDirectoryLastModifiedTime($path);
         }
 
-        return $lastModifiedTime;
+        return 0;
+    }
+
+    private function getFileModificationTime(string $path): int
+    {
+        $mtime = filemtime($path);
+        return $mtime !== false ? $mtime : 0;
+    }
+
+    private function getDirectoryLastModifiedTime(string $path): int
+    {
+        try {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS)
+            );
+
+            $lastModifiedTime = 0;
+            foreach ($iterator as $fileinfo) {
+                if ($fileinfo->isFile()) {
+                    $lastModifiedTime = max($lastModifiedTime, $fileinfo->getMTime());
+                }
+            }
+
+            return $lastModifiedTime;
+        } catch (\Exception $e) {
+            return $this->getFileModificationTime($path);
+        }
     }
 
     private function getLanguageService(): LanguageService
