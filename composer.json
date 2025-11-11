@@ -56,39 +56,35 @@
 	"scripts": {
 		"fix": [
 			"@fix:composer",
-			"@fix:yaml",
-			"@fix:typoscript",
-			"@fix:php:stan",
-			"@fix:php:rector",
 			"@fix:editorconfig",
-			"@fix:php:fixer"
+			"@fix:php",
+			"@fix:typoscript",
+			"@fix:yaml"
 		],
-		"fix:composer": "@composer normalize --no-check-lock",
-		"fix:editorconfig": "ec --strict --fix --git-only -n",
-		"fix:php:fixer": "@php php-cs-fixer fix",
-		"fix:php:rector": "rector",
-		"fix:php:stan": "@php phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=-1 -vvv",
+		"fix:composer": "@composer normalize",
+		"fix:editorconfig": "@lint:editorconfig --fix",
+		"fix:php": "php vendor/bin/php-cs-fixer --config=.php-cs-fixer.php fix",
 		"fix:typoscript": "typoscript-lint",
 		"fix:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"lint": [
 			"@lint:composer",
-			"@lint:composer:dependencies",
 			"@lint:editorconfig",
 			"@lint:php",
-			"@lint:yaml",
 			"@lint:typoscript",
-			"@lint:php:stan",
-			"@lint:php:rector",
-			"@lint:php:fixer"
+			"@lint:yaml"
 		],
-		"lint:composer": "@composer normalize --no-check-lock --dry-run",
-		"lint:composer:dependencies": "composer-dependency-analyser",
-		"lint:editorconfig": "ec --strict --git-only -n",
-		"lint:php": "find *.php . -name '*.php' ! -path '*node_modules/*' ! -path './var/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' -print0 | xargs -0 -n 1 -P 4 php -l",
-		"lint:php:fixer": "@php php-cs-fixer fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
-		"lint:php:rector": "rector --dry-run",
-		"lint:php:stan": "@php phpstan analyse --no-progress --error-format=checkstyle --memory-limit=-1 --configuration=phpstan.neon > phpstan.xml || true",
+		"lint:composer": "@fix:composer --dry-run",
+		"lint:editorconfig": "ec --git-only",
+		"lint:php": "@fix:php --dry-run",
 		"lint:typoscript": "typoscript-lint --fail-on-warnings",
-		"lint:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
+		"lint:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
+		"migration": [
+			"@migration:rector"
+		],
+		"migration:rector": "rector process -c rector.php",
+		"sca": [
+			"@sca:php"
+		],
+		"sca:php": "phpstan analyse --memory-limit=2G"
 	}
 }
