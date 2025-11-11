@@ -1,2 +1,7 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Cognitive complexity for "MoveElevator\\Typo3Toolbox\\EventListener\\LastDeploymentEventListener\:\:getLastModifiedTime\(\)" is 15, keep it under 10$#'
+			identifier: complexity.functionLike
+			count: 1
+			path: Classes/EventListener/LastDeploymentEventListener.php
