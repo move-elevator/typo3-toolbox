@@ -43,7 +43,7 @@ class LastDeploymentEventListener
                 $timeZone,
                 \IntlDateFormatter::GREGORIAN
             );
-            $humanFormatDateTime = $formatter->format($lastModified);
+            $humanFormatDateTime = $formatter->format($lastModified) ?: '';
         } else {
             $humanFormatDateTime = date('D, d.m.Y H:i', $lastModified);
         }
@@ -93,7 +93,7 @@ class LastDeploymentEventListener
             }
 
             return $lastModifiedTime;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->getFileModificationTime($path);
         }
     }

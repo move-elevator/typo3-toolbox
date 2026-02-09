@@ -29,16 +29,15 @@ To login, you can use the username `admin` and password `Password1!`.
 
 ```bash
 # All linters
-composer lint
+ddev cgl lint
 
 # Specific linters
-composer lint:composer
-composer lint:editorconfig
-composer lint:typoscript
-composer lint:php
-composer lint:php:stan
-composer lint:php:fixer
-composer lint:php:rector
+ddev cgl  lint:composer
+ddev cgl  lint:editorconfig
+ddev cgl  lint:typoscript
+ddev cgl  lint:php
+ddev cgl  sca
+ddev cgl  migration
 ```
 
 ## Submit a pull request

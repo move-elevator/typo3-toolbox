@@ -21,7 +21,7 @@
 		"enabled": true,
 		"actions": [
 			{
-				"action": "composer lint:editorconfig",
+				"action": "composer lint:editorconfig -d Tests/CGL",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\InDirectory",
@@ -32,7 +32,7 @@
 				]
 			},
 			{
-				"action": "composer lint:yaml",
+				"action": "composer lint:yaml -d Tests/CGL",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
@@ -43,7 +43,7 @@
 				]
 			},
 			{
-				"action": "composer lint:php",
+				"action": "composer lint:php -d Tests/CGL",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
@@ -54,7 +54,7 @@
 				]
 			},
 			{
-				"action": "composer lint:composer",
+				"action": "composer lint:composer -d Tests/CGL",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
@@ -65,7 +65,7 @@
 				]
 			},
 			{
-				"action": "vendor/bin/rector process --dry-run {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
+				"action": "Tests/CGL/vendor/bin/rector process --dry-run -c Tests/CGL/rector.php {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
@@ -76,7 +76,7 @@
 				]
 			},
 			{
-				"action": "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php -v --dry-run --using-cache=no --diff {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
+				"action": "Tests/CGL/vendor/bin/php-cs-fixer fix --config Tests/CGL/.php-cs-fixer.php -v --dry-run --using-cache=no --diff {$STAGED_FILES|in-dir:src|of-type:php|separated-by: }",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
@@ -87,7 +87,7 @@
 				]
 			},
 			{
-				"action": "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1",
+				"action": "Tests/CGL/vendor/bin/phpstan analyse -c Tests/CGL/phpstan.neon --memory-limit=-1",
 				"conditions": [
 					{
 						"exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",

@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+$rootPath = dirname(__DIR__, 2);
+
 $finder = new PhpCsFixer\Finder()
     ->exclude('node_modules')
     ->ignoreVCSIgnored(true)
-    ->in(realpath(__DIR__));
+    ->in(realpath($rootPath));
 
 return new PhpCsFixer\Config()
     ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
