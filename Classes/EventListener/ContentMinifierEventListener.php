@@ -53,7 +53,7 @@ final class ContentMinifierEventListener
         $content = (string)preg_replace_callback(
             '/class="([^"]+)"/',
             static function (array $matches) {
-                $cleanedClassList = trim(preg_replace('/\s+/', ' ', $matches[1]));
+                $cleanedClassList = trim((string)preg_replace('/\s+/', ' ', $matches[1]));
                 return 'class="' . $cleanedClassList . '"';
             },
             $content
@@ -74,6 +74,6 @@ final class ContentMinifierEventListener
             $content
         );
 
-        return preg_replace(array_keys($replacements), array_values($replacements), $content);
+        return (string)preg_replace(array_keys($replacements), array_values($replacements), $content);
     }
 }

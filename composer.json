@@ -19,16 +19,11 @@
 		"typo3fluid/fluid": "^4.3"
 	},
 	"require-dev": {
-		"armin/editorconfig-cli": "^2.1",
 		"captainhook/captainhook": "^5.25",
-		"ergebnis/composer-normalize": "^2.47",
-		"friendsofphp/php-cs-fixer": "^3.82",
-		"helhum/typo3-console": "^8.2",
-		"helmich/typo3-typoscript-lint": "^3.3",
-		"konradmichalik/phpstan-typo3-preset": "^0.1",
-		"roave/security-advisories": "dev-latest",
-		"shipmonk/composer-dependency-analyser": "^1.8",
-		"ssch/typo3-rector": "^3.6",
+		"eliashaeussler/version-bumper": "^3.0",
+		"helhum/typo3-console": "^8.1",
+		"move-elevator/composer-translation-validator": "^1.0",
+		"phpunit/phpunit": "^11.0 || ^12.0",
 		"typo3/cms-base-distribution": "^13.4",
 		"typo3/cms-lowlevel": "^13.4"
 	},
@@ -39,7 +34,9 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"eliashaeussler/version-bumper": true,
 			"ergebnis/composer-normalize": true,
+			"move-elevator/composer-translation-validator": true,
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
 		}
@@ -50,41 +47,9 @@
 		}
 	},
 	"scripts": {
-		"fix": [
-			"@fix:composer",
-			"@fix:yaml",
-			"@fix:typoscript",
-			"@fix:php:stan",
-			"@fix:php:rector",
-			"@fix:editorconfig",
-			"@fix:php:fixer"
+		"post-install-cmd": [
+			"@cgl install"
 		],
-		"fix:composer": "@composer normalize --no-check-lock",
-		"fix:editorconfig": "ec --strict --fix --git-only -n",
-		"fix:php:fixer": "@php php-cs-fixer fix",
-		"fix:php:rector": "rector",
-		"fix:php:stan": "@php phpstan --generate-baseline=phpstan-baseline.neon --allow-empty-baseline --memory-limit=-1 -vvv",
-		"fix:typoscript": "typoscript-lint",
-		"fix:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
-		"lint": [
-			"@lint:composer",
-			"@lint:composer:dependencies",
-			"@lint:editorconfig",
-			"@lint:php",
-			"@lint:yaml",
-			"@lint:typoscript",
-			"@lint:php:stan",
-			"@lint:php:rector",
-			"@lint:php:fixer"
-		],
-		"lint:composer": "@composer normalize --no-check-lock --dry-run",
-		"lint:composer:dependencies": "composer-dependency-analyser",
-		"lint:editorconfig": "ec --strict --git-only -n",
-		"lint:php": "find *.php . -name '*.php' ! -path '*node_modules/*' ! -path './var/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' -print0 | xargs -0 -n 1 -P 4 php -l",
-		"lint:php:fixer": "@php php-cs-fixer fix --dry-run --format=checkstyle > php-cs-fixer.xml || true",
-		"lint:php:rector": "rector --dry-run",
-		"lint:php:stan": "@php phpstan analyse --no-progress --error-format=checkstyle --memory-limit=-1 --configuration=phpstan.neon > phpstan.xml || true",
-		"lint:typoscript": "typoscript-lint --fail-on-warnings",
-		"lint:yaml": "find ./ ! -path '*/node_modules/*' ! -path './vendor/*' ! -path './typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint"
+		"cgl": "@composer -d Tests/CGL --"
 	}
 }

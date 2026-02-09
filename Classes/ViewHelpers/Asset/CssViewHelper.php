@@ -28,8 +28,9 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
     protected $escapeChildren = true;
     protected AssetCollector $assetCollector;
 
-    public function injectAssetCollector(AssetCollector $assetCollector): void
+    public function __construct(\TYPO3\CMS\Core\Page\AssetCollector $assetCollector)
     {
+        parent::__construct();
         $this->assetCollector = $assetCollector;
     }
 
