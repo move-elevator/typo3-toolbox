@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoveElevator\Typo3Toolbox\EventListener;
 
 use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
 #[AsEventListener(identifier: 'moveElevator/contentMinifier')]
@@ -12,9 +13,17 @@ final class ContentMinifierEventListener
 {
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        $event->getController()->content = $this->minify( // @phpstan-ignore-line
-            $event->getController()->content // @phpstan-ignore-line
-        );
+        $currentVersion = VersionNumberUtility::getCurrentTypo3Version();
+        $currentVersionInt = VersionNumberUtility::convertVersionNumberToInteger($currentVersion);
+        $requiredVersionInt = VersionNumberUtility::convertVersionNumberToInteger('14.0.0');
+
+        if ($currentVersionInt < $requiredVersionInt) {
+            $event->getController()->content = $this->minify( // @phpstan-ignore-line
+                $event->getController()->content // @phpstan-ignore-line
+            );
+        } else {
+            $event->setContent($this->minify($event->getContent()));
+        }
     }
 
     /**
@@ -63,7 +72,12 @@ final class ContentMinifierEventListener
             '/<script\s+type="application\/ld\+json">(.*?)<\/script>/s',
             static function (array $matches) {
                 $json = trim($matches[1]);
-                $minifiedJson = json_encode(json_decode($json, true), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+
+                try {
+                    $minifiedJson = json_encode(json_decode($json, true), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+                } catch (\JsonException) {
+                    return '';
+                }
 
                 if ('null' === $minifiedJson) {
                     return '';
