@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb392a45d2f36d4580a37e64f30604dc",
+    "content-hash": "4b5432614d06321b72f58978620e9b86",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5853,6 +5853,126 @@
             "time": "2026-01-20T07:17:00+00:00"
         },
         {
+            "name": "typo3/cms-info",
+            "version": "v13.4.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3-CMS/info.git",
+                "reference": "2b241e6927f4bdaae1e230e938c609a2711c785d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3-CMS/info/zipball/2b241e6927f4bdaae1e230e938c609a2711c785d",
+                "reference": "2b241e6927f4bdaae1e230e938c609a2711c785d",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/cms-core": "13.4.24"
+            },
+            "conflict": {
+                "typo3/cms": "*"
+            },
+            "replace": {
+                "typo3/cms-info-pagetsconfig": "self.version"
+            },
+            "type": "typo3-cms-framework",
+            "extra": {
+                "typo3/cms": {
+                    "Package": {
+                        "partOfFactoryDefault": true
+                    },
+                    "extension-key": "info"
+                },
+                "branch-alias": {
+                    "dev-main": "13.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3\\CMS\\Info\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "TYPO3 Core Team",
+                    "email": "typo3cms@typo3.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TYPO3 CMS Info - TYPO3 backend module for displaying information, such as a pagetree overview and localization information.",
+            "homepage": "https://typo3.org",
+            "support": {
+                "chat": "https://typo3.org/help",
+                "docs": "https://docs.typo3.org",
+                "issues": "https://forge.typo3.org",
+                "source": "https://github.com/typo3/typo3"
+            },
+            "time": "2026-01-20T07:17:00+00:00"
+        },
+        {
+            "name": "typo3/cms-linkvalidator",
+            "version": "v13.4.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3-CMS/linkvalidator.git",
+                "reference": "80c7f1360e8e97465bacf06aa490e07d4db2368d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3-CMS/linkvalidator/zipball/80c7f1360e8e97465bacf06aa490e07d4db2368d",
+                "reference": "80c7f1360e8e97465bacf06aa490e07d4db2368d",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/cms-core": "13.4.24",
+                "typo3/cms-info": "13.4.24"
+            },
+            "conflict": {
+                "typo3/cms": "*"
+            },
+            "suggest": {
+                "typo3/cms-scheduler": "Regular checks of links"
+            },
+            "type": "typo3-cms-framework",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "linkvalidator"
+                },
+                "branch-alias": {
+                    "dev-main": "13.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3\\CMS\\Linkvalidator\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "TYPO3 Core Team",
+                    "email": "typo3cms@typo3.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TYPO3 CMS LinkValidator - Checks for broken links and displays results in the (Info>LinkValidator) backend module.",
+            "homepage": "https://typo3.org",
+            "support": {
+                "chat": "https://typo3.org/help",
+                "docs": "https://docs.typo3.org/c/typo3/cms-linkvalidator/main/en-us",
+                "issues": "https://forge.typo3.org",
+                "source": "https://github.com/typo3/typo3"
+            },
+            "time": "2026-01-20T07:17:00+00:00"
+        },
+        {
             "name": "typo3/html-sanitizer",
             "version": "v2.2.0",
             "source": {
@@ -9520,67 +9640,6 @@
             "support": {
                 "chat": "https://typo3.org/help",
                 "docs": "https://docs.typo3.org/c/typo3/cms-impexp/main/en-us/",
-                "issues": "https://forge.typo3.org",
-                "source": "https://github.com/typo3/typo3"
-            },
-            "time": "2026-01-20T07:17:00+00:00"
-        },
-        {
-            "name": "typo3/cms-info",
-            "version": "v13.4.24",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TYPO3-CMS/info.git",
-                "reference": "2b241e6927f4bdaae1e230e938c609a2711c785d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3-CMS/info/zipball/2b241e6927f4bdaae1e230e938c609a2711c785d",
-                "reference": "2b241e6927f4bdaae1e230e938c609a2711c785d",
-                "shasum": ""
-            },
-            "require": {
-                "typo3/cms-core": "13.4.24"
-            },
-            "conflict": {
-                "typo3/cms": "*"
-            },
-            "replace": {
-                "typo3/cms-info-pagetsconfig": "self.version"
-            },
-            "type": "typo3-cms-framework",
-            "extra": {
-                "typo3/cms": {
-                    "Package": {
-                        "partOfFactoryDefault": true
-                    },
-                    "extension-key": "info"
-                },
-                "branch-alias": {
-                    "dev-main": "13.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TYPO3\\CMS\\Info\\": "Classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "TYPO3 Core Team",
-                    "email": "typo3cms@typo3.org",
-                    "role": "Developer"
-                }
-            ],
-            "description": "TYPO3 CMS Info - TYPO3 backend module for displaying information, such as a pagetree overview and localization information.",
-            "homepage": "https://typo3.org",
-            "support": {
-                "chat": "https://typo3.org/help",
-                "docs": "https://docs.typo3.org",
                 "issues": "https://forge.typo3.org",
                 "source": "https://github.com/typo3/typo3"
             },

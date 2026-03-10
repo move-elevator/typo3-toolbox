@@ -1,0 +1,4 @@
+mod.linkvalidator {
+	linktypes = db,file,external
+	linktypesConfig.external.timeout = 10
+}
