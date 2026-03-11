@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MoveElevator\Typo3Toolbox\EventListener;
 
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
 #[AsEventListener(identifier: 'moveElevator/contentMinifier')]
@@ -13,17 +12,7 @@ final class ContentMinifierEventListener
 {
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        $currentVersion = VersionNumberUtility::getCurrentTypo3Version();
-        $currentVersionInt = VersionNumberUtility::convertVersionNumberToInteger($currentVersion);
-        $requiredVersionInt = VersionNumberUtility::convertVersionNumberToInteger('14.0.0');
-
-        if ($currentVersionInt < $requiredVersionInt) {
-            $event->getController()->content = $this->minify( // @phpstan-ignore-line
-                $event->getController()->content // @phpstan-ignore-line
-            );
-        } else {
-            $event->setContent($this->minify($event->getContent()));
-        }
+        $event->setContent($this->minify($event->getContent()));
     }
 
     /**
