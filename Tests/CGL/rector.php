@@ -8,7 +8,6 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use Rector\ValueObject\PhpVersion;
 use Ssch\TYPO3Rector\CodeQuality\General\{ConvertImplicitVariablesToExplicitGlobalsRector,
-    ExtEmConfRector,
     GeneralUtilityMakeInstanceToConstructorPropertyRector};
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\{Typo3LevelSetList, Typo3SetList};
@@ -20,8 +19,6 @@ return RectorConfig::configure()
         $rootPath.'/Classes',
         $rootPath.'/Configuration',
     ])
-    // uncomment to reach your current PHP version
-    // ->withPhpSets()
     ->withPhpVersion(PhpVersion::PHP_84)
     ->withSets([
         Typo3SetList::CODE_QUALITY,
@@ -40,8 +37,6 @@ return RectorConfig::configure()
     // If you use withImportNames(), you should consider excluding some
     // TYPO3 files.
     ->withSkip([
-        // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
-        $rootPath.'/**/Configuration/ExtensionBuilder/*',
         NameImportingPostRector::class => [
             'ClassAliasMap.php',
         ],

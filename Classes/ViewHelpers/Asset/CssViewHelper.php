@@ -26,12 +26,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 final class CssViewHelper extends AbstractTagBasedViewHelper
 {
     protected $escapeChildren = true;
-    protected AssetCollector $assetCollector;
 
-    public function __construct(\TYPO3\CMS\Core\Page\AssetCollector $assetCollector)
+    public function __construct(protected AssetCollector $assetCollector)
     {
         parent::__construct();
-        $this->assetCollector = $assetCollector;
     }
 
     #[\Override]

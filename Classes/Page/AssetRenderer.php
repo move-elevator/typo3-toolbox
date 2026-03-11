@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 readonly class AssetRenderer extends \TYPO3\CMS\Core\Page\AssetRenderer
 {
+    #[\Override]
     public function renderStyleSheets(bool $priority = false, string $endingSlash = '', ?ConsumableNonce $nonce = null): string
     {
         $inlineStyles = $this->assetCollector->getInlineStyleSheets();
