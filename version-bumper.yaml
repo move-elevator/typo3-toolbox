@@ -1,5 +1,5 @@
 presets:
-  - name: typo3-extension
+  - name: conventional-commits
 
 releaseOptions:
   commitMessage: 'release: version {%version%}'
