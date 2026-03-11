@@ -7,7 +7,6 @@ parameters:
 
 	scanDirectories:
 		- ../../vendor
-		- ../../vendor/phpunit/phpunit/src
 	paths:
 		- ../../Classes
 		- ../../Configuration
