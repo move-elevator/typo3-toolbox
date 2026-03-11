@@ -1,0 +1,9 @@
+admPanel.enable {
+	cache = 1
+	debug = 0
+	edit = 1
+	info = 0
+	preview = 1
+	publish = 0
+	tsdebug = 0
+}

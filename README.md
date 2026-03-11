@@ -82,6 +82,26 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_toolbox']['sentryFrontendEnable
 |-----------------------|-------------------|----------------------------------------------------------------------------|
 | SentryMiddleware      | /api/sentry       | Returns sentry environment data as json which is consumed in the frontend. |
 
+### TypoScript
+
+The extension ships a site set (`Toolbox`) that includes the following TypoScript configuration:
+
+- **Admin Panel** (`Config.typoscript`): Enables the TYPO3 admin panel and sets the custom page renderer template.
+
+### Page TSconfig
+
+The site set also provides default Page TSconfig via `page.tsconfig`:
+
+- **TCEMAIN** (`TCEMAIN.tsconfig`): Configures default user/group permissions and table-specific copy behavior for `pages` and `tt_content` (disables prepending "[Translate to...]" on copy, keeps copied elements visible).
+- **Clipboard** (`Mod.tsconfig`): Enables the clipboard in the web list module.
+- **Link Validator** (`Extensions/LinkValidator.tsconfig`): Enables validation for `db`, `file` and `external` link types and sets a 10-second timeout for external link validation.
+
+### User TSconfig
+
+The extension provides a default `user.tsconfig` that configures the admin panel modules:
+
+- Enabled: `cache`, `edit`, `preview`
+- Disabled: `debug`, `info`, `publish`, `tsdebug`
 
 ## License
 

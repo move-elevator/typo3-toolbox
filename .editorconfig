@@ -28,3 +28,8 @@ indent_style = tab
 [*.neon]
 indent_size = 2
 indent_style = tab
+
+# TypoScript-Files
+[*.{typoscript,tsconfig}]
+indent_size = 2
+indent_style = tab

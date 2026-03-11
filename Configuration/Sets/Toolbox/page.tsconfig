@@ -1,0 +1,3 @@
+@import './PageTsConfig/Extensions/*.tsconfig'
+@import './PageTsConfig/TCEMAIN.tsconfig'
+@import './PageTsConfig/Mod.tsconfig'
