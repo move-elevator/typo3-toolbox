@@ -63,6 +63,7 @@
 		"lint:editorconfig": "ec --git-only",
 		"lint:language": "@composer validate-translations ./../../Resources/Private/Language",
 		"lint:php": "@fix:php --dry-run",
+		"lint:typoscript": "@php typoscript-lint",
 		"lint:yaml": "find ./ ! -path './../../node_modules/*' ! -path './../../vendor/*' ! -path './vendor/*' ! -path './../../typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"migration": [
 			"@migration:rector"
