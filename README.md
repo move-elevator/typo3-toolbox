@@ -4,7 +4,7 @@
 
 # TYPO3 extension `typo3_toolbox`
 
-[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/13/orange)]()
+[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/14/orange)]()
 [![License](https://poser.pugx.org/move-elevator/typo3-toolbox/license)](LICENSE.md)
 [![last commit](https://img.shields.io/github/last-commit/move-elevator/typo3-toolbox)](https://github.com/move-elevator/typo3-toolbox/commits)
 
@@ -24,7 +24,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 ## Requirements
 
 - PHP 8.4
-- TYPO3 13.4
+- TYPO3 14.0+
 
 ## Installation
 
