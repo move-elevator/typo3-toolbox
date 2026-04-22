@@ -21,10 +21,12 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
 
-## Requirements
+## Version support
 
-- PHP 8.4
-- TYPO3 14.0+
+| Extension version | TYPO3 | PHP      |
+|-------------------|-------|----------|
+| 2.x               | 14.3  | 8.4, 8.5 |
+| 1.x               | 13.4  | 8.4, 8.5 |
 
 ## Installation
 
