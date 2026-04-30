@@ -31,7 +31,7 @@ final readonly class SaveCloseButtonEventListener
             $title = 'save';
 
             if ($language instanceof LanguageService) {
-                $title = $language->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveCloseDoc');
+                $title = $language->sL('core.core:rm.saveCloseDoc');
             }
 
             $saveCloseButton = $this->componentFactory->createInputButton()
