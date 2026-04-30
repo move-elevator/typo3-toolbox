@@ -4,27 +4,29 @@ declare(strict_types=1);
 
 namespace MoveElevator\Typo3Toolbox\EventListener;
 
-use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\InputButton;
-use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
+use TYPO3\CMS\Backend\Template\Components\{ButtonBar,ComponentFactory,ModifyButtonBarEvent};
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Imaging\IconSize;
+use TYPO3\CMS\Core\Imaging\{IconFactory,IconSize};
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 #[AsEventListener(identifier: 'moveElevator/modifyButtonBar')]
-final class SaveCloseButtonEventListener
+final readonly class SaveCloseButtonEventListener
 {
+    public function __construct(
+        private ComponentFactory $componentFactory,
+        private IconFactory $iconFactory,
+        private PageRenderer $pageRenderer,
+    ) {
+    }
+
     public function __invoke(ModifyButtonBarEvent $event): void
     {
         $buttons = $event->getButtons();
-        $buttonBar = $event->getButtonBar();
         $saveButton = $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][0] ?? null;
 
         if ($saveButton instanceof InputButton) {
-            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
             $language = $this->getLanguageService();
             $title = 'save';
 
@@ -32,7 +34,7 @@ final class SaveCloseButtonEventListener
                 $title = $language->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveCloseDoc');
             }
 
-            $saveCloseButton = $buttonBar->makeInputButton()
+            $saveCloseButton = $this->componentFactory->createInputButton()
                 ->setName('_saveandclosedok')
                 ->setValue('1')
                 ->setForm($saveButton->getForm())
@@ -40,15 +42,13 @@ final class SaveCloseButtonEventListener
                     'js' => 'save-and-close-button',
                 ])
                 ->setTitle($title)
-                ->setIcon($iconFactory->getIcon('actions-document-save-close', IconSize::SMALL))
+                ->setIcon($this->iconFactory->getIcon('actions-document-save-close', IconSize::SMALL))
                 ->setShowLabelText(true);
 
             $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][] = $saveCloseButton;
         }
 
-        /** @var PageRenderer $pageRenderer */
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@move-elevator/typo3-toolbox/SaveAndClose.js');
+        $this->pageRenderer->loadJavaScriptModule('@move-elevator/typo3-toolbox/SaveAndClose.js');
 
         $event->setButtons($buttons);
     }
