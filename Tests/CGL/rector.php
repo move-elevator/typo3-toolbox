@@ -19,12 +19,12 @@ return RectorConfig::configure()
         $rootPath.'/Classes',
         $rootPath.'/Configuration',
     ])
-    ->withPhpVersion(PhpVersion::PHP_84)
+    ->withPhpVersion(PhpVersion::PHP_85)
     ->withSets([
         Typo3SetList::CODE_QUALITY,
         Typo3SetList::GENERAL,
-        Typo3LevelSetList::UP_TO_TYPO3_13,
-        LevelSetList::UP_TO_PHP_84,
+        Typo3LevelSetList::UP_TO_TYPO3_14,
+        LevelSetList::UP_TO_PHP_85,
     ])
     // To have a better analysis from PHPStan, we teach it here some more things
     ->withPHPStanConfigs([

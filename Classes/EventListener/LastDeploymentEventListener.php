@@ -49,7 +49,7 @@ class LastDeploymentEventListener
         }
 
         $systemInformation->getToolbarItem()->addSystemInformation(
-            $this->getLanguageService()->sL('LLL:EXT:' . Configuration::EXT_KEY->value . '/Resources/Private/Language/locallang_be.xlf:system_information.last_updated'),
+            $this->getLanguageService()->sL('typo3_toolbox.be:system_information.last_updated'),
             $humanFormatDateTime,
             'actions-refresh',
         );

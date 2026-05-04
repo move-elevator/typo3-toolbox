@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace MoveElevator\Typo3Toolbox\Page;
 
 use TYPO3\CMS\Core\Security\ContentSecurityPolicy\ConsumableNonce;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
 readonly class AssetRenderer extends \TYPO3\CMS\Core\Page\AssetRenderer
 {
@@ -18,7 +16,7 @@ readonly class AssetRenderer extends \TYPO3\CMS\Core\Page\AssetRenderer
 
         // Remove calculated inline styles from normal styles
         foreach ($inlineStyles as $key => $value) {
-            if (true === array_key_exists($key, $normalStyles)) {
+            if (true === array_key_exists((string) $key, $normalStyles)) {
                 $this->assetCollector->removeStyleSheet($key);
             }
         }
@@ -46,14 +44,9 @@ readonly class AssetRenderer extends \TYPO3\CMS\Core\Page\AssetRenderer
         return $return;
     }
 
-    protected function getAbsoluteWebPath(string $file): string
+    private function getAbsoluteWebPath(string $file): string
     {
-        if (true === PathUtility::hasProtocolAndScheme($file)) {
-            return $file;
-        }
-
-        $file = PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($file));
-
-        return GeneralUtility::createVersionNumberedFilename($file);
+        $resource = $this->systemResourceFactory->createPublicResource($file);
+        return (string)$this->resourcePublisher->generateUri($resource, null);
     }
 }

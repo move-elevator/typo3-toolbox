@@ -4,7 +4,7 @@
 
 # TYPO3 extension `typo3_toolbox`
 
-[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/13/orange)]()
+[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/14/orange)]()
 [![License](https://poser.pugx.org/move-elevator/typo3-toolbox/license)](LICENSE.md)
 [![last commit](https://img.shields.io/github/last-commit/move-elevator/typo3-toolbox)](https://github.com/move-elevator/typo3-toolbox/commits)
 
@@ -21,10 +21,12 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
 
-## Requirements
+## Version support
 
-- PHP 8.4
-- TYPO3 13.4
+| Extension version | TYPO3 | PHP      |
+|-------------------|-------|----------|
+| 2.x               | 14.3  | 8.4, 8.5 |
+| 1.x               | 13.4  | 8.4, 8.5 |
 
 ## Installation
 
@@ -75,6 +77,24 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_toolbox']['sentryFrontendEnable
 ```
 
 ## Documentation
+
+### Content Minifier
+
+The `ContentMinifierEventListener` automatically minifies the HTML output of all cacheable frontend pages. It hooks into the TYPO3 `AfterCacheableContentIsGeneratedEvent` and is active by default — no configuration required.
+
+#### Optimizations
+
+| Optimization                     | Description                                                                                                                                                                                                   |
+|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Remove JS inline comments        | Strips `/** */` comments                                                                                                                                                                                      |
+| Collapse whitespace              | Converts linebreaks, tabs, and multiple spaces into single spaces                                                                                                                                             |
+| Remove inter-tag spaces          | Removes spaces between HTML tags (preserves inline tags: `a`, `b`, `strong`, `img`, `em`, `i`, `span`, `small`, `big`)                                                                                        |
+| Fix self-closing tags            | Converts `" />` to `">` for HTML5 conformity                                                                                                                                                                  |
+| Remove redundant type attributes | Strips `type="text/css"` from `<style>` and `type="text/javascript"` from `<script>` tags                                                                                                                     |
+| Normalize class attributes       | Collapses multiple spaces within `class` attribute values                                                                                                                                                     |
+| Minify JSON-LD schemas           | Re-encodes `<script type="application/ld+json">` content as compact JSON; removes invalid schemas                                                                                                             |
+| Remove CKEditor data attributes  | Strips `data-list-item-id` attributes from `<li>` elements added by CKEditor 5 ([TYPO3#109002](https://forge.typo3.org/issues/109002), [CKEditor5#19006](https://github.com/ckeditor/ckeditor5/issues/19006)) |
+| Trim tag content whitespace      | Removes leading/trailing whitespace inside `h1`–`h6`, `p`, `li`, `td`, `th`, `dt`, `dd`, `button`, and `label` tags                                                                                           |
 
 ### Middlewares
 

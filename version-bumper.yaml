@@ -2,4 +2,4 @@ presets:
   - name: conventional-commits
 
 releaseOptions:
-  commitMessage: 'release: version {%version%}'
+  commitMessage: 'chore(release): version {%version%}'
