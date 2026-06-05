@@ -20,6 +20,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a CSS view helper that enables the rendering of a `noscript` variant and allows inline styles to be replaced by a key-value-based `inlineReplacements` option flag
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
+- Adds a backend avatar provider that assigns the move elevator logo to backend users with an `@move-elevator.de` email address (when no custom avatar is set)
 
 ## Version support
 
@@ -95,6 +96,12 @@ The `ContentMinifierEventListener` automatically minifies the HTML output of all
 | Minify JSON-LD schemas           | Re-encodes `<script type="application/ld+json">` content as compact JSON; removes invalid schemas                                                                                                             |
 | Remove CKEditor data attributes  | Strips `data-list-item-id` attributes from `<li>` elements added by CKEditor 5 ([TYPO3#109002](https://forge.typo3.org/issues/109002), [CKEditor5#19006](https://github.com/ckeditor/ckeditor5/issues/19006)) |
 | Trim tag content whitespace      | Removes leading/trailing whitespace inside `h1`–`h6`, `p`, `li`, `td`, `th`, `dt`, `dd`, `button`, and `label` tags                                                                                           |
+
+### Backend Avatar
+
+The `MoveElevatorAvatarProvider` automatically assigns the move elevator logo (`Resources/Public/Icons/me.svg`) as the backend avatar for any backend user whose email address ends with `@move-elevator.de`.
+
+Personal avatars uploaded via the user settings always take precedence — the logo is only used as a fallback when no custom avatar is configured.
 
 ### Middlewares
 
