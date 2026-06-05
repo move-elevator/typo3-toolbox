@@ -6,12 +6,18 @@ namespace MoveElevator\Typo3Toolbox\Backend\Avatar;
 
 use TYPO3\CMS\Backend\Backend\Avatar\AvatarProviderInterface;
 use TYPO3\CMS\Backend\Backend\Avatar\Image;
-use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Core\SystemResource\Publishing\SystemResourcePublisherInterface;
+use TYPO3\CMS\Core\SystemResource\SystemResourceFactory;
 
-final class MoveElevatorAvatarProvider implements AvatarProviderInterface
+final readonly class MoveElevatorAvatarProvider implements AvatarProviderInterface
 {
     private const string EMAIL_DOMAIN = '@move-elevator.de';
     private const string LOGO_PATH = 'EXT:typo3_toolbox/Resources/Public/Icons/me.svg';
+
+    public function __construct(
+        private SystemResourceFactory $systemResourceFactory,
+        private SystemResourcePublisherInterface $resourcePublisher,
+    ) {}
 
     /**
      * @param array<int|string, mixed> $backendUser
@@ -27,8 +33,10 @@ final class MoveElevatorAvatarProvider implements AvatarProviderInterface
             return null;
         }
 
+        $resource = $this->systemResourceFactory->createPublicResource(self::LOGO_PATH);
+
         return new Image(
-            PathUtility::getPublicResourceWebPath(self::LOGO_PATH),
+            (string)$this->resourcePublisher->generateUri($resource, null),
             $size,
             $size,
         );
