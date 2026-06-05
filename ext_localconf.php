@@ -1,5 +1,6 @@
 <?php
 
+use MoveElevator\Typo3Toolbox\Backend\Avatar\MoveElevatorAvatarProvider;
 use MoveElevator\Typo3Toolbox\Enumeration\Configuration;
 use MoveElevator\Typo3Toolbox\Page\AssetRenderer;
 use Networkteam\SentryClient;
@@ -11,6 +12,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 (static function (): void {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][Typo3AssetRenderer::class] = [
         'className' => AssetRenderer::class,
+    ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_befunc.php']['getBackendUserAvatar']['moveElevatorAvatar'] = [
+        'provider' => MoveElevatorAvatarProvider::class,
     ];
 
     $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get(Configuration::EXT_KEY->value);
