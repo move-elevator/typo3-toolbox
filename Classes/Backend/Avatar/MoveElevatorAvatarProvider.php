@@ -17,7 +17,8 @@ final readonly class MoveElevatorAvatarProvider implements AvatarProviderInterfa
     public function __construct(
         private SystemResourceFactory $systemResourceFactory,
         private SystemResourcePublisherInterface $resourcePublisher,
-    ) {}
+    ) {
+    }
 
     /**
      * @param array<int|string, mixed> $backendUser
