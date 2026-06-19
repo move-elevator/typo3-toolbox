@@ -53,7 +53,8 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
     {
         parent::initializeArguments();
         $this->registerArgument('disabled', 'bool', 'Define whether or not the described stylesheet should be loaded and applied to the document.');
-        $this->registerArgument('useNonce', 'bool', 'Whether to use the global nonce value', false, false);
+        $this->registerArgument('useNonce', 'bool', 'Whether to use the global nonce value. @deprecated use "csp" instead, will be removed in 3.0.0.', false, null);
+        $this->registerArgument('csp', 'bool', 'Whether to collect a CSP hash value for this asset', false, null);
         $this->registerArgument('identifier', 'string', 'Use this identifier within templates to only inject your CSS once, even though it is added multiple times.', true);
         $this->registerArgument('priority', 'boolean', 'Define whether the CSS should be included before other CSS. CSS will always be output in the <head> tag.', false, false);
         $this->registerArgument('inline', 'bool', 'Define whether or not the referenced file should be loaded as inline styles (Only to be used if \'href\' is set).', false, false);
@@ -73,9 +74,15 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
 
         $file = $attributes['href'] ?? null;
         unset($attributes['href']);
+
+        $useCsp = $this->arguments['csp'];
+        if ($this->arguments['useNonce'] !== null) {
+            $useCsp = (bool)$this->arguments['useNonce'];
+        }
+
         $options = [
             'priority' => $this->arguments['priority'],
-            'useNonce' => $this->arguments['useNonce'],
+            'csp' => $useCsp,
             'noscript' => (bool)($this->arguments['noscript'] ?? false),
         ];
 
