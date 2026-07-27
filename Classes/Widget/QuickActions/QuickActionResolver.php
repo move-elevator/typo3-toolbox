@@ -18,16 +18,16 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
  * actions — unknown record tables or unresolvable module routes — are skipped
  * silently so a single mistake never breaks the whole widget.
  */
-final class QuickActionResolver
+final readonly class QuickActionResolver
 {
-    private const DEFAULT_ICONS = [
+    private const array DEFAULT_ICONS = [
         QuickActionType::Url->value => 'actions-link',
         QuickActionType::Module->value => 'actions-open',
         QuickActionType::Record->value => 'actions-plus',
     ];
 
     public function __construct(
-        private readonly UriBuilder $uriBuilder,
+        private UriBuilder $uriBuilder,
     ) {
     }
 
@@ -69,13 +69,7 @@ final class QuickActionResolver
         }
 
         $userGroups = array_map(intval(...), $backendUser->userGroupsUID);
-        foreach ($action->beGroups as $group) {
-            if (in_array((int)$group, $userGroups, true)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($action->beGroups, fn ($group) => in_array((int)$group, $userGroups, true));
     }
 
     private function resolveUrl(QuickAction $action, string $returnUrl): ?string

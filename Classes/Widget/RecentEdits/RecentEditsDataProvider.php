@@ -23,19 +23,19 @@ use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
  * links: unknown TCA tables, deleted records and tables the user may not modify
  * are filtered out.
  */
-final class RecentEditsDataProvider
+final readonly class RecentEditsDataProvider
 {
     /**
      * Over-fetch factor: history rows may resolve to records that get filtered
      * out (deleted, no access, excluded), so we read more than requested.
      */
-    private const OVERFETCH_FACTOR = 5;
+    private const int OVERFETCH_FACTOR = 5;
 
     public function __construct(
-        private readonly ConnectionPool $connectionPool,
-        private readonly IconFactory $iconFactory,
-        private readonly UriBuilder $uriBuilder,
-        private readonly LanguageServiceFactory $languageServiceFactory,
+        private ConnectionPool $connectionPool,
+        private IconFactory $iconFactory,
+        private UriBuilder $uriBuilder,
+        private LanguageServiceFactory $languageServiceFactory,
     ) {
     }
 
@@ -183,8 +183,8 @@ final class RecentEditsDataProvider
     private function relativeAge(int $timestamp): string
     {
         return trim(BackendUtility::calcAge(
-            (int)$GLOBALS['EXEC_TIME'] - $timestamp,
-            $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.minutesHoursDaysYears'),
+            (int)\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getPropertyFromAspect('date', 'timestamp') - $timestamp,
+            $this->getLanguageService()->sL('core.core:labels.minutesHoursDaysYears'),
         ));
     }
 

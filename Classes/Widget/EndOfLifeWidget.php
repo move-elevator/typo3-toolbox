@@ -103,7 +103,7 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
 
         $requests = [];
         if (!in_array('typo3', $configured, true)) {
-            $requests[] = new ComponentRequest('typo3', (new Typo3Version())->getBranch(), false, 'TYPO3');
+            $requests[] = new ComponentRequest('typo3', new Typo3Version()->getBranch(), false, 'TYPO3');
         }
         if (!in_array('php', $configured, true)) {
             $requests[] = new ComponentRequest('php', PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION, false, 'PHP');
@@ -116,6 +116,6 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
     {
         $timestamp = $this->context->getAspect('date')->get('timestamp');
 
-        return (new \DateTimeImmutable())->setTimestamp($timestamp);
+        return new \DateTimeImmutable()->setTimestamp($timestamp);
     }
 }
