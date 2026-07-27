@@ -14,6 +14,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
         'className' => AssetRenderer::class,
     ];
 
+    // Cache for the End-of-Life widget's endoflife.date responses (24h fresh, kept as stale fallback).
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][Configuration::EXT_KEY->value] ??= [];
+
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_befunc.php']['getBackendUserAvatar']['moveElevatorAvatar'] = [
         'provider' => MoveElevatorAvatarProvider::class,
     ];

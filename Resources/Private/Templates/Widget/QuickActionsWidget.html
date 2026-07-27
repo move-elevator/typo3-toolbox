@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:spaceless>
+<div class="widget-content-main tx-toolbox-widget tx-toolbox-quick-actions">
+    <f:if condition="{actions}">
+        <f:then>
+            <div class="tx-toolbox-quick-actions__list">
+                <f:for each="{actions}" as="action">
+                    <a class="btn btn-default tx-toolbox-quick-actions__action"
+                       href="{action.url}"
+                       target="{f:if(condition: action.external, then: '_blank')}"
+                       rel="{f:if(condition: action.external, then: 'noreferrer noopener')}">
+                        <core:icon identifier="{action.iconIdentifier}" size="small" />
+                        <span class="tx-toolbox-quick-actions__label">{action.label}</span>
+                    </a>
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <p class="tx-toolbox-widget__empty text-body-secondary">
+                <f:translate key="LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.empty" />
+            </p>
+        </f:else>
+    </f:if>
+</div>
+</f:spaceless>
+</html>

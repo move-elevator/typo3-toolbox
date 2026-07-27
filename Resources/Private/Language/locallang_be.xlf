@@ -18,6 +18,69 @@
 			<trans-unit id="system_information.last_updated">
 				<source>Last Update</source>
 			</trans-unit>
+			<trans-unit id="widgetGroup.moveElevator">
+				<source>move:elevator</source>
+			</trans-unit>
+			<trans-unit id="dashboard.moveElevatorEditor">
+				<source>move:elevator Editor</source>
+			</trans-unit>
+			<trans-unit id="dashboard.moveElevatorEditor.description">
+				<source>Recent edits and quick actions for the daily editing workflow.</source>
+			</trans-unit>
+			<trans-unit id="dashboard.moveElevatorAdmin">
+				<source>move:elevator Admin</source>
+			</trans-unit>
+			<trans-unit id="dashboard.moveElevatorAdmin.description">
+				<source>Editor tools plus the component end-of-life overview for administrators.</source>
+			</trans-unit>
+			<trans-unit id="widgets.recentEdits.title">
+				<source>Recent Edits</source>
+			</trans-unit>
+			<trans-unit id="widgets.recentEdits.description">
+				<source>The records you edited most recently, each linking straight back into its edit form.</source>
+			</trans-unit>
+			<trans-unit id="widgets.recentEdits.empty">
+				<source>You haven't edited any records yet.</source>
+			</trans-unit>
+			<trans-unit id="widgets.quickActions.title">
+				<source>Quick Actions</source>
+			</trans-unit>
+			<trans-unit id="widgets.quickActions.description">
+				<source>Configurable shortcuts for the recurring editing workflows of this project.</source>
+			</trans-unit>
+			<trans-unit id="widgets.quickActions.empty">
+				<source>No quick actions are configured.</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.title">
+				<source>End-of-Life</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.description">
+				<source>Support lifecycle of TYPO3, PHP and further components on a shared timeline.</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.empty">
+				<source>No lifecycle data available.</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.today">
+				<source>Today</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.phase.fullSupport">
+				<source>Full support</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.phase.security">
+				<source>Security support</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.phase.elts">
+				<source>Extended support (ELTS)</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.badge.eltsRequired">
+				<source>ELTS required</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.badge.eltsActive">
+				<source>ELTS active until</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.badge.warning">
+				<source>Security support ends</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

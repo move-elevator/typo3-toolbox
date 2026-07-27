@@ -1,0 +1,208 @@
+/*
+ * Styles for the move:elevator dashboard widgets
+ * (Recent Edits, Quick Actions, End-of-Life).
+ */
+
+.tx-toolbox-widget__empty {
+    margin: 0;
+    padding: 1rem 0;
+}
+
+/* Recent Edits ----------------------------------------------------------- */
+
+.tx-toolbox-recent-edits__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tx-toolbox-recent-edits__item + .tx-toolbox-recent-edits__item {
+    border-top: 1px solid var(--typo3-component-border-color, rgba(0, 0, 0, .1));
+}
+
+.tx-toolbox-recent-edits__link {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .375rem .25rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.tx-toolbox-recent-edits__link:hover,
+.tx-toolbox-recent-edits__link:focus-visible {
+    background: var(--typo3-component-hover-bg, rgba(0, 0, 0, .05));
+}
+
+.tx-toolbox-recent-edits__icon {
+    flex: 0 0 auto;
+}
+
+.tx-toolbox-recent-edits__body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.tx-toolbox-recent-edits__title,
+.tx-toolbox-recent-edits__meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tx-toolbox-recent-edits__meta {
+    font-size: .85em;
+}
+
+.tx-toolbox-recent-edits__age {
+    flex: 0 0 auto;
+    font-size: .85em;
+    white-space: nowrap;
+}
+
+/* Quick Actions ---------------------------------------------------------- */
+
+.tx-toolbox-quick-actions__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.tx-toolbox-quick-actions__action {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+}
+
+/* End-of-Life ------------------------------------------------------------ */
+
+.tx-toolbox-eol__grid {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.tx-toolbox-eol__axis {
+    position: relative;
+    height: 1.25rem;
+    font-size: .75em;
+    color: var(--typo3-text-color-muted, #6c757d);
+}
+
+.tx-toolbox-eol__year {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.tx-toolbox-eol__rows {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .625rem;
+}
+
+.tx-toolbox-eol__today {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--typo3-state-info-color, #0288d1);
+    transform: translateX(-1px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tx-toolbox-eol__row {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.tx-toolbox-eol__label {
+    display: flex;
+    align-items: center;
+    gap: .375rem;
+    flex-wrap: wrap;
+    font-size: .9em;
+}
+
+.tx-toolbox-eol__name {
+    font-weight: 600;
+}
+
+.tx-toolbox-eol__badge {
+    font-size: .75em;
+}
+
+.tx-toolbox-eol__badge--danger {
+    background: var(--typo3-state-danger-color, #c83c3c);
+    color: #fff;
+}
+
+.tx-toolbox-eol__badge--warning {
+    background: var(--typo3-state-warning-color, #d9a441);
+    color: #000;
+}
+
+.tx-toolbox-eol__badge--info {
+    background: var(--typo3-component-border-color, rgba(0, 0, 0, .15));
+    color: inherit;
+}
+
+.tx-toolbox-eol__track {
+    display: flex;
+    width: 100%;
+    height: 14px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--typo3-component-border-color, rgba(0, 0, 0, .08));
+}
+
+.tx-toolbox-eol__segment {
+    height: 100%;
+    flex: 0 0 auto;
+}
+
+.tx-toolbox-eol__segment--spacer {
+    background: transparent;
+}
+
+.tx-toolbox-eol__segment--full-support {
+    background: #4c9a52;
+}
+
+.tx-toolbox-eol__segment--security {
+    background: #d9a441;
+}
+
+.tx-toolbox-eol__segment--elts {
+    background: #c83c3c;
+}
+
+.tx-toolbox-eol__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: .8em;
+    color: var(--typo3-text-color-muted, #6c757d);
+}
+
+.tx-toolbox-eol__legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+}
+
+.tx-toolbox-eol__swatch {
+    display: inline-block;
+    width: .75rem;
+    height: .75rem;
+    border-radius: 2px;
+}

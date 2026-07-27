@@ -1,0 +1,35 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:spaceless>
+<div class="widget-content-main tx-toolbox-widget tx-toolbox-recent-edits">
+    <f:if condition="{edits}">
+        <f:then>
+            <ul class="tx-toolbox-recent-edits__list">
+                <f:for each="{edits}" as="edit">
+                    <li class="tx-toolbox-recent-edits__item">
+                        <a class="tx-toolbox-recent-edits__link" href="{edit.editUrl}" title="{edit.title}">
+                            <span class="tx-toolbox-recent-edits__icon">
+                                <core:icon identifier="{edit.iconIdentifier}" size="small" />
+                            </span>
+                            <span class="tx-toolbox-recent-edits__body">
+                                <span class="tx-toolbox-recent-edits__title">{edit.title}</span>
+                                <span class="tx-toolbox-recent-edits__meta text-body-secondary">
+                                    {edit.tableLabel}<f:if condition="{edit.pageTitle}"> &middot; {edit.pageTitle}</f:if>
+                                </span>
+                            </span>
+                            <span class="tx-toolbox-recent-edits__age text-body-secondary">{edit.relativeAge}</span>
+                        </a>
+                    </li>
+                </f:for>
+            </ul>
+        </f:then>
+        <f:else>
+            <p class="tx-toolbox-widget__empty text-body-secondary">
+                <f:translate key="LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.empty" />
+            </p>
+        </f:else>
+    </f:if>
+</div>
+</f:spaceless>
+</html>
