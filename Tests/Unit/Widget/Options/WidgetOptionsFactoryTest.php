@@ -94,4 +94,46 @@ final class WidgetOptionsFactoryTest extends UnitTestCase
         self::assertSame('2030-01-01', $options->timeWindow->end->format('Y-m-d'));
         self::assertSame(180, $options->warningThresholdDays);
     }
+
+    #[Test]
+    public function decimalLimitStringIsRejectedInsteadOfTruncated(): void
+    {
+        $this->expectException(InvalidWidgetOptionsException::class);
+        $this->expectExceptionMessage('limit: must be an integer');
+
+        $this->subject->createRecentEditsOptions(['limit' => '1.5']);
+    }
+
+    #[Test]
+    public function nonScalarListEntryIsRejectedWithIndexedPath(): void
+    {
+        $this->expectException(InvalidWidgetOptionsException::class);
+        $this->expectExceptionMessage('excludedTables.0: must be a string');
+
+        $this->subject->createRecentEditsOptions(['excludedTables' => [['nested']]]);
+    }
+
+    #[Test]
+    public function nonBooleanEltsContractIsRejectedWithItsPath(): void
+    {
+        $this->expectException(InvalidWidgetOptionsException::class);
+        $this->expectExceptionMessage('components.0.eltsContract: must be a boolean');
+
+        $this->subject->createEndOfLifeOptions(
+            ['components' => [['product' => 'php', 'version' => '8.4', 'eltsContract' => 'maybe']]],
+            new \DateTimeImmutable('2026-01-01T00:00:00+00:00'),
+        );
+    }
+
+    #[Test]
+    public function normalizedInvalidCalendarDateIsRejected(): void
+    {
+        $this->expectException(InvalidWidgetOptionsException::class);
+        $this->expectExceptionMessage('timeWindow.from: "2026-02-30" is not a valid date');
+
+        $this->subject->createEndOfLifeOptions(
+            ['timeWindow' => ['from' => '2026-02-30']],
+            new \DateTimeImmutable('2026-01-01T00:00:00+00:00'),
+        );
+    }
 }
