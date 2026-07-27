@@ -15,17 +15,17 @@ use MoveElevator\Typo3Toolbox\Widget\EndOfLife\TimeWindow;
  */
 final class WidgetOptionsFactory
 {
-    private const DEFAULT_RECENT_EDITS_LIMIT = 8;
-    private const DEFAULT_EXCLUDED_TABLES = [
+    private const int DEFAULT_RECENT_EDITS_LIMIT = 8;
+    private const array DEFAULT_EXCLUDED_TABLES = [
         'sys_file_reference',
         'sys_file_metadata',
         'sys_history',
         'sys_log',
         'sys_refindex',
     ];
-    private const DEFAULT_WARNING_THRESHOLD_DAYS = 180;
-    private const DEFAULT_WINDOW_FROM = '-1 year';
-    private const DEFAULT_WINDOW_TO = '+4 years';
+    private const int DEFAULT_WARNING_THRESHOLD_DAYS = 180;
+    private const string DEFAULT_WINDOW_FROM = '-1 year';
+    private const string DEFAULT_WINDOW_TO = '+4 years';
 
     /**
      * @param array<string, mixed> $options
@@ -158,7 +158,7 @@ final class WidgetOptionsFactory
 
         if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $spec) === 1) {
             $absolute = \DateTimeImmutable::createFromFormat('!Y-m-d', $spec);
-            if ($absolute === false) {
+            if ($absolute === false || $absolute->format('Y-m-d') !== $spec) {
                 $window->fail($key, sprintf('"%s" is not a valid date', $spec));
             }
 

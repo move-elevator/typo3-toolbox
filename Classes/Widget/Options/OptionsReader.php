@@ -32,11 +32,14 @@ final readonly class OptionsReader
             return $default;
         }
         $value = $this->data[$key];
-        if (!is_int($value) && !(is_string($value) && is_numeric($value))) {
-            $this->fail($key, 'must be an integer');
+        if (is_int($value)) {
+            return $value;
+        }
+        if (is_string($value) && preg_match('/^-?\d+$/', $value) === 1) {
+            return (int)$value;
         }
 
-        return (int)$value;
+        $this->fail($key, 'must be an integer');
     }
 
     public function bool(string $key, bool $default): bool
@@ -44,8 +47,24 @@ final readonly class OptionsReader
         if (!$this->has($key)) {
             return $default;
         }
+        $value = $this->data[$key];
+        if (is_bool($value)) {
+            return $value;
+        }
+        if (is_int($value) && ($value === 0 || $value === 1)) {
+            return $value === 1;
+        }
+        if (is_string($value)) {
+            $normalized = strtolower(trim($value));
+            if (in_array($normalized, ['1', 'true', 'yes', 'on'], true)) {
+                return true;
+            }
+            if (in_array($normalized, ['0', 'false', 'no', 'off', ''], true)) {
+                return false;
+            }
+        }
 
-        return (bool)$this->data[$key];
+        $this->fail($key, 'must be a boolean');
     }
 
     public function string(string $key, ?string $default = null): ?string
@@ -85,7 +104,17 @@ final readonly class OptionsReader
             $this->fail($key, 'must be a list of strings');
         }
 
-        return array_values(array_map(static fn (mixed $item): string => (string)$item, $value));
+        $list = [];
+        $index = 0;
+        foreach ($value as $item) {
+            if (!is_string($item) && !is_int($item)) {
+                $this->fail($key . '.' . $index, 'must be a string');
+            }
+            $list[] = (string)$item;
+            ++$index;
+        }
+
+        return $list;
     }
 
     /**
@@ -102,6 +131,9 @@ final readonly class OptionsReader
         }
         $map = [];
         foreach ($value as $mapKey => $mapValue) {
+            if (!is_string($mapValue) && !is_int($mapValue) && !is_float($mapValue)) {
+                $this->fail($key . '.' . $mapKey, 'must be a string');
+            }
             $map[(string)$mapKey] = (string)$mapValue;
         }
 
@@ -140,7 +172,7 @@ final readonly class OptionsReader
         $index = 0;
         foreach ($value as $entry) {
             if (!is_array($entry)) {
-                (new self([], $this->pathFor($key) . '.' . $index))->failSelf('must be a map');
+                new self([], $this->pathFor($key) . '.' . $index)->failSelf('must be a map');
             }
             $readers[] = new self($entry, $this->pathFor($key) . '.' . $index);
             ++$index;
@@ -160,7 +192,7 @@ final readonly class OptionsReader
      */
     public function present(array $keys): array
     {
-        return array_values(array_filter($keys, fn (string $key): bool => $this->has($key)));
+        return array_values(array_filter($keys, $this->has(...)));
     }
 
     /**
@@ -169,7 +201,8 @@ final readonly class OptionsReader
     public function failSelf(string $message): never
     {
         throw new InvalidWidgetOptionsException(
-            ($this->path !== '' ? $this->path . ': ' : '') . $message
+            ($this->path !== '' ? $this->path . ': ' : '') . $message,
+            5954496666
         );
     }
 
@@ -178,7 +211,7 @@ final readonly class OptionsReader
      */
     public function fail(string $key, string $message): never
     {
-        throw new InvalidWidgetOptionsException($this->pathFor($key) . ': ' . $message);
+        throw new InvalidWidgetOptionsException($this->pathFor($key) . ': ' . $message, 4405121941);
     }
 
     private function pathFor(string $key): string
