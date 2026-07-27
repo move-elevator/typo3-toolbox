@@ -20,6 +20,7 @@ final readonly class ComponentLifecycle
         public bool $eltsContract,
         public ?\DateTimeImmutable $securityEnd,
         public ?\DateTimeImmutable $eltsEnd,
+        public bool $endOfLifeReached = false,
     ) {
     }
 
@@ -47,6 +48,21 @@ final readonly class ComponentLifecycle
     public function eltsActive(\DateTimeImmutable $now): bool
     {
         return $this->isInElts($now) && $this->eltsContract;
+    }
+
+    /**
+     * True when the component is end-of-life and not (any longer) covered by an ELTS phase.
+     */
+    public function isEndOfLife(\DateTimeImmutable $now): bool
+    {
+        if ($this->isInElts($now)) {
+            return false;
+        }
+        if ($this->endOfLifeReached) {
+            return true;
+        }
+
+        return $this->securityEnd !== null && $now >= $this->securityEnd;
     }
 
     /**

@@ -81,6 +81,9 @@
 			<trans-unit id="widgets.endOfLife.badge.warning">
 				<source>Security support ends</source>
 			</trans-unit>
+			<trans-unit id="widgets.endOfLife.badge.endOfLife">
+				<source>End of life</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -73,6 +73,9 @@ final class TimelineFactory
         if ($component->eltsActive($now)) {
             return ['kind' => 'eltsActive', 'date' => $component->eltsEnd];
         }
+        if ($component->isEndOfLife($now)) {
+            return ['kind' => 'endOfLife', 'date' => null];
+        }
         if ($component->securityEndsSoon($now, $warningDays)) {
             return ['kind' => 'warning', 'date' => $component->securityEnd];
         }
