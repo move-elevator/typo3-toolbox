@@ -16,4 +16,16 @@ enum LifecyclePhaseType: string
     case FullSupport = 'fullSupport';
     case Security = 'security';
     case Elts = 'elts';
+
+    /**
+     * BEM modifier of the segment and legend swatch representing this phase.
+     */
+    public function cssModifier(): string
+    {
+        return match ($this) {
+            self::FullSupport => 'full-support',
+            self::Security => 'security',
+            self::Elts => 'elts',
+        };
+    }
 }

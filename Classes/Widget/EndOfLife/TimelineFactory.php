@@ -12,10 +12,18 @@ namespace MoveElevator\Typo3Toolbox\Widget\EndOfLife;
  */
 final class TimelineFactory
 {
+    private const string DATE_FORMAT = 'Y-m-d';
+    private const string UNSUPPORTED = 'unsupported';
+
+    /**
+     * Rounding leftovers must not produce a hairline tail segment.
+     */
+    private const float MIN_TAIL_PERCENT = 0.1;
+
     /**
      * @param list<ComponentLifecycle> $components
      * @return array{
-     *     bars: list<array{label: string, version: string, leadingPercent: float, segments: list<array{type: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable}>, badge: ?array{kind: string, date: ?\DateTimeImmutable}}>,
+     *     bars: list<array{label: string, version: string, leadingPercent: float, segments: list<array{type: string, cssModifier: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable, startLabel: ?string, endLabel: ?string}>, badge: ?array{kind: string, date: ?\DateTimeImmutable}}>,
      *     todayPercent: ?float,
      *     years: list<array{year: int, percent: float}>
      * }
@@ -35,7 +43,7 @@ final class TimelineFactory
     }
 
     /**
-     * @return array{label: string, version: string, leadingPercent: float, segments: list<array{type: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable}>, badge: ?array{kind: string, date: ?\DateTimeImmutable}}
+     * @return array{label: string, version: string, leadingPercent: float, segments: list<array{type: string, cssModifier: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable, startLabel: ?string, endLabel: ?string}>, badge: ?array{kind: string, date: ?\DateTimeImmutable}}
      */
     private function buildBar(ComponentLifecycle $component, TimeWindow $window, \DateTimeImmutable $now, int $warningDays): array
     {
@@ -47,19 +55,54 @@ final class TimelineFactory
             }
             $segments[] = [
                 'type' => $phase->type->value,
+                'cssModifier' => $phase->type->cssModifier(),
                 'widthPercent' => round($width, 4),
                 'start' => $phase->start,
                 'end' => $phase->end,
+                'startLabel' => $this->dateLabel($phase->start),
+                'endLabel' => $this->dateLabel($phase->end),
             ];
         }
+
+        $leadingPercent = round($window->offsetPercentOf($component->firstPhaseStart() ?? $window->start), 4);
 
         return [
             'label' => $component->label,
             'version' => $component->version,
-            'leadingPercent' => round($window->offsetPercentOf($component->firstPhaseStart() ?? $window->start), 4),
-            'segments' => $segments,
+            'leadingPercent' => $leadingPercent,
+            'segments' => $this->withUnsupportedTail($segments, $leadingPercent),
             'badge' => $this->badge($component, $now, $warningDays),
         ];
+    }
+
+    /**
+     * Closes the bar with an explicit "no support" segment when the last phase
+     * ends inside the window. Without it the bare track would show through and
+     * read like just another lifecycle phase.
+     *
+     * @param list<array{type: string, cssModifier: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable, startLabel: ?string, endLabel: ?string}> $segments
+     * @return list<array{type: string, cssModifier: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable, startLabel: ?string, endLabel: ?string}>
+     */
+    private function withUnsupportedTail(array $segments, float $leadingPercent): array
+    {
+        $used = array_sum(array_column($segments, 'widthPercent')) + $leadingPercent;
+        $remaining = 100.0 - $used;
+        if ($remaining <= self::MIN_TAIL_PERCENT) {
+            return $segments;
+        }
+
+        $last = $segments === [] ? null : $segments[count($segments) - 1];
+        $segments[] = [
+            'type' => self::UNSUPPORTED,
+            'cssModifier' => self::UNSUPPORTED,
+            'widthPercent' => round($remaining, 4),
+            'start' => $last['end'] ?? null,
+            'end' => null,
+            'startLabel' => $last['endLabel'] ?? null,
+            'endLabel' => null,
+        ];
+
+        return $segments;
     }
 
     /**
@@ -81,6 +124,20 @@ final class TimelineFactory
         }
 
         return null;
+    }
+
+    /**
+     * Formats a phase boundary for display, or null when there is nothing
+     * meaningful to show: an open boundary, or the epoch marker the data
+     * provider uses for "reached at an unknown date".
+     */
+    private function dateLabel(?\DateTimeImmutable $date): ?string
+    {
+        if ($date === null || $date->getTimestamp() <= 0) {
+            return null;
+        }
+
+        return $date->format(self::DATE_FORMAT);
     }
 
     /**

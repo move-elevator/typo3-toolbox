@@ -1,6 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 <f:variable name="ll">LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:</f:variable>
+<f:variable name="unknownDate"><f:translate key="{ll}widgets.endOfLife.date.unknown" /></f:variable>
+<f:variable name="openEnd"><f:translate key="{ll}widgets.endOfLife.date.open" /></f:variable>
 <div class="widget-content-main tx-toolbox-widget tx-toolbox-eol">
     <f:if condition="{timeline.bars}">
         <f:then>
@@ -24,23 +26,23 @@
                                 <f:if condition="{bar.badge}">
                                     <f:switch expression="{bar.badge.kind}">
                                         <f:case value="eltsRequired">
-                                            <span class="badge tx-toolbox-eol__badge tx-toolbox-eol__badge--danger">
+                                            <span class="badge badge-danger tx-toolbox-eol__badge">
                                                 <f:translate key="{ll}widgets.endOfLife.badge.eltsRequired" />
                                             </span>
                                         </f:case>
                                         <f:case value="endOfLife">
-                                            <span class="badge tx-toolbox-eol__badge tx-toolbox-eol__badge--danger">
+                                            <span class="badge badge-danger tx-toolbox-eol__badge">
                                                 <f:translate key="{ll}widgets.endOfLife.badge.endOfLife" />
                                             </span>
                                         </f:case>
                                         <f:case value="eltsActive">
-                                            <span class="badge tx-toolbox-eol__badge tx-toolbox-eol__badge--info">
+                                            <span class="badge badge-info tx-toolbox-eol__badge">
                                                 <f:translate key="{ll}widgets.endOfLife.badge.eltsActive" />
                                                 <f:format.date format="Y-m-d">{bar.badge.date}</f:format.date>
                                             </span>
                                         </f:case>
                                         <f:case value="warning">
-                                            <span class="badge tx-toolbox-eol__badge tx-toolbox-eol__badge--warning">
+                                            <span class="badge badge-warning tx-toolbox-eol__badge">
                                                 <f:translate key="{ll}widgets.endOfLife.badge.warning" />
                                                 <f:format.date format="Y-m-d">{bar.badge.date}</f:format.date>
                                             </span>
@@ -50,25 +52,15 @@
                             </div>
                             <div class="tx-toolbox-eol__track">
                                 <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--spacer"
-                                      style="width: {bar.leadingPercent}%"></span>
+                                      style="width: {bar.leadingPercent}%"
+                                      title="{f:translate(key: '{ll}widgets.endOfLife.phase.notReleased')}"></span>
                                 <f:for each="{bar.segments}" as="segment">
-                                    <f:switch expression="{segment.type}">
-                                        <f:case value="fullSupport">
-                                            <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--full-support"
-                                                  style="width: {segment.widthPercent}%"
-                                                  title="{f:translate(key: '{ll}widgets.endOfLife.phase.fullSupport')}"></span>
-                                        </f:case>
-                                        <f:case value="security">
-                                            <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--security"
-                                                  style="width: {segment.widthPercent}%"
-                                                  title="{f:translate(key: '{ll}widgets.endOfLife.phase.security')}"></span>
-                                        </f:case>
-                                        <f:case value="elts">
-                                            <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--elts"
-                                                  style="width: {segment.widthPercent}%"
-                                                  title="{f:translate(key: '{ll}widgets.endOfLife.phase.elts')}"></span>
-                                        </f:case>
-                                    </f:switch>
+                                    <f:variable name="phaseLabel"><f:translate key="{ll}widgets.endOfLife.phase.{segment.type}" /></f:variable>
+                                    <f:variable name="from">{segment.startLabel -> f:or(alternative: unknownDate)}</f:variable>
+                                    <f:variable name="until">{segment.endLabel -> f:or(alternative: openEnd)}</f:variable>
+                                    <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--{segment.cssModifier}"
+                                          style="width: {segment.widthPercent}%"
+                                          title="{phaseLabel}: {from} – {until}"></span>
                                 </f:for>
                             </div>
                         </div>
@@ -78,6 +70,8 @@
                     <li><span class="tx-toolbox-eol__swatch tx-toolbox-eol__segment--full-support"></span><f:translate key="{ll}widgets.endOfLife.phase.fullSupport" /></li>
                     <li><span class="tx-toolbox-eol__swatch tx-toolbox-eol__segment--security"></span><f:translate key="{ll}widgets.endOfLife.phase.security" /></li>
                     <li><span class="tx-toolbox-eol__swatch tx-toolbox-eol__segment--elts"></span><f:translate key="{ll}widgets.endOfLife.phase.elts" /></li>
+                    <li><span class="tx-toolbox-eol__swatch tx-toolbox-eol__segment--unsupported"></span><f:translate key="{ll}widgets.endOfLife.phase.unsupported" /></li>
+                    <li><span class="tx-toolbox-eol__swatch tx-toolbox-eol__swatch--spacer"></span><f:translate key="{ll}widgets.endOfLife.phase.notReleased" /></li>
                 </ul>
             </div>
         </f:then>
