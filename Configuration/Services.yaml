@@ -36,8 +36,8 @@ services:
         title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.title'
         description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.description'
         iconIdentifier: 'actions-lightning'
-        height: 'medium'
-        width: 'small'
+        height: 'small'
+        width: 'medium'
 
   MoveElevator\Typo3Toolbox\Widget\EndOfLifeWidget:
     tags:
