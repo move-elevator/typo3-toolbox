@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:spaceless>
+<ul class="tx-toolbox-welcome__links">
+    <f:for each="{card.links}" as="link">
+        <li>
+            <a class="tx-toolbox-welcome__link"
+               href="{link.href}"
+               <f:if condition="{link.external}">target="_blank" rel="noreferrer noopener"</f:if>>
+                <core:icon identifier="{link.iconIdentifier -> f:or(alternative: 'actions-link')}" size="small" />
+                <span><f:translate key="{link.label}" default="{link.label}" /></span>
+                <f:if condition="{link.external}">
+                    <core:icon identifier="actions-window-open" size="small" />
+                </f:if>
+            </a>
+        </li>
+    </f:for>
+</ul>
+</f:spaceless>
+</html>
