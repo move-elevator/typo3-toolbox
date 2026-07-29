@@ -33,14 +33,38 @@
 			<trans-unit id="dashboard.moveElevatorAdmin.description">
 				<source>Editor tools plus the component end-of-life overview for administrators.</source>
 			</trans-unit>
+			<trans-unit id="widgets.welcome.title">
+				<source>Welcome</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.description">
+				<source>Personalized entry point: greeting, intro text and project cards (contact, links, custom content).</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.greeting.morning">
+				<source>Good morning, %s!</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.greeting.day">
+				<source>Hello %s!</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.greeting.evening">
+				<source>Good evening, %s!</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.greeting.night">
+				<source>Still up, %s?</source>
+			</trans-unit>
+			<trans-unit id="widgets.welcome.greeting.anonymous">
+				<source>Welcome!</source>
+			</trans-unit>
 			<trans-unit id="widgets.recentEdits.title">
-				<source>Recent Edits</source>
+				<source>My Recent Edits</source>
 			</trans-unit>
 			<trans-unit id="widgets.recentEdits.description">
-				<source>The records you edited most recently, each linking straight back into its edit form.</source>
+				<source>Your own most recent changes only — never those of other editors. Each entry links straight back into its edit form.</source>
+			</trans-unit>
+			<trans-unit id="widgets.recentEdits.hint">
+				<source>Only your own changes</source>
 			</trans-unit>
 			<trans-unit id="widgets.recentEdits.empty">
-				<source>You haven't edited any records yet.</source>
+				<source>You haven't edited any records yet. Changes made by other editors are not listed here.</source>
 			</trans-unit>
 			<trans-unit id="widgets.quickActions.title">
 				<source>Quick Actions</source>
@@ -63,6 +87,12 @@
 			<trans-unit id="widgets.endOfLife.today">
 				<source>Today</source>
 			</trans-unit>
+			<trans-unit id="widgets.endOfLife.date.unknown">
+				<source>unknown</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.date.open">
+				<source>open</source>
+			</trans-unit>
 			<trans-unit id="widgets.endOfLife.phase.fullSupport">
 				<source>Full support</source>
 			</trans-unit>
@@ -70,7 +100,13 @@
 				<source>Security support</source>
 			</trans-unit>
 			<trans-unit id="widgets.endOfLife.phase.elts">
-				<source>Extended support (ELTS)</source>
+				<source>Extended support</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.phase.unsupported">
+				<source>No support</source>
+			</trans-unit>
+			<trans-unit id="widgets.endOfLife.phase.notReleased">
+				<source>Not released yet</source>
 			</trans-unit>
 			<trans-unit id="widgets.endOfLife.badge.eltsRequired">
 				<source>ELTS required</source>
