@@ -5,6 +5,10 @@
 <div class="widget-content-main tx-toolbox-widget tx-toolbox-recent-edits">
     <f:if condition="{edits}">
         <f:then>
+            <p class="tx-toolbox-recent-edits__hint text-body-secondary">
+                <core:icon identifier="actions-user" size="small" />
+                <f:translate key="LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.hint" />
+            </p>
             <ul class="tx-toolbox-recent-edits__list">
                 <f:for each="{edits}" as="edit">
                     <li class="tx-toolbox-recent-edits__item">
