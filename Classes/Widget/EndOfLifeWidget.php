@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\Typo3Toolbox\Widget;
 
+use MoveElevator\Typo3Toolbox\Widget\EndOfLife\DatabasePlatformDetector;
 use MoveElevator\Typo3Toolbox\Widget\EndOfLife\LifecycleDataProvider;
 use MoveElevator\Typo3Toolbox\Widget\EndOfLife\TimelineFactory;
 use MoveElevator\Typo3Toolbox\Widget\Options\ComponentRequest;
@@ -36,6 +37,7 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
         private readonly WidgetConfigurationInterface $configuration,
         private readonly BackendViewFactory $backendViewFactory,
         private readonly LifecycleDataProvider $lifecycleDataProvider,
+        private readonly DatabasePlatformDetector $databasePlatformDetector,
         private readonly TimelineFactory $timelineFactory,
         private readonly WidgetOptionsFactory $optionsFactory,
         private readonly Context $context,
@@ -90,7 +92,8 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
     }
 
     /**
-     * Auto-detects TYPO3 and PHP (unless overridden) and appends the configured components.
+     * Auto-detects TYPO3, PHP and the database platform (unless overridden) and
+     * appends the configured components.
      *
      * @return list<ComponentRequest>
      */
@@ -101,12 +104,17 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
             $options->components,
         );
 
+        $detected = [
+            new ComponentRequest('typo3', new Typo3Version()->getBranch(), false, 'TYPO3'),
+            new ComponentRequest('php', PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION, false, 'PHP'),
+            $this->databasePlatformDetector->detect(),
+        ];
+
         $requests = [];
-        if (!in_array('typo3', $configured, true)) {
-            $requests[] = new ComponentRequest('typo3', new Typo3Version()->getBranch(), false, 'TYPO3');
-        }
-        if (!in_array('php', $configured, true)) {
-            $requests[] = new ComponentRequest('php', PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION, false, 'PHP');
+        foreach ($detected as $request) {
+            if ($request !== null && !in_array(strtolower($request->product), $configured, true)) {
+                $requests[] = $request;
+            }
         }
 
         return [...$requests, ...$options->components];
