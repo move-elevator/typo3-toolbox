@@ -1,0 +1,11 @@
+<f:argument name="fonts" type="string[]" description="Font files to preload, each one prefixed with the path argument" />
+<f:argument name="path" type="string" default="" description="Base path prepended to every font file, e.g. EXT:site_package/Resources/Public/Fonts/" />
+<f:argument name="type" type="string" default="font/woff2" description="MIME type rendered as the type attribute" />
+<f:argument name="crossorigin" type="string" default="anonymous" description="crossorigin attribute value, required so the preloaded font is reused by the font loader" />
+<f:argument name="useCacheBusting" type="bool" default="{false}" description="Whether to append a cache buster to the resource URI" />
+
+<f:page.headerData><f:spaceless>
+	<f:for each="{fonts}" as="font">
+		<link rel="preload" href="{f:uri.resource(path: '{path}{font}', useCacheBusting: useCacheBusting)}" as="font" type="{type}" crossorigin="{crossorigin}">
+	</f:for>
+</f:spaceless></f:page.headerData>
