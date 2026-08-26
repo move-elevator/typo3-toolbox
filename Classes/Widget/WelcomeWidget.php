@@ -62,7 +62,7 @@ final class WelcomeWidget implements WidgetInterface, RequestAwareWidgetInterfac
             'intro' => $options->intro,
             'branding' => $options->branding,
             'brandingLogoUri' => $this->logoUri($options->branding->logo),
-            'cards' => $this->cardLinkResolver->resolveAll($options->cards),
+            'cards' => $this->cardLinkResolver->resolveAll($options->cards, $this->request),
             'configuration' => $this->configuration,
         ]);
 

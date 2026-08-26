@@ -6,6 +6,9 @@ namespace MoveElevator\Typo3Toolbox\Widget\Welcome;
 
 /**
  * Names a contact person for the project, with click-to-contact channels.
+ *
+ * {@see $image} is turned into a concrete {@see $imageUri} by the
+ * {@see CardLinkResolver}; until then it is null.
  */
 final readonly class ContactCard implements CardInterface
 {
@@ -18,6 +21,7 @@ final readonly class ContactCard implements CardInterface
         public ?string $image,
         public array $channels,
         private ?string $title,
+        public ?string $imageUri = null,
     ) {
     }
 
@@ -29,5 +33,10 @@ final readonly class ContactCard implements CardInterface
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function withImageUri(string $imageUri): self
+    {
+        return new self($this->name, $this->role, $this->image, $this->channels, $this->title, $imageUri);
     }
 }

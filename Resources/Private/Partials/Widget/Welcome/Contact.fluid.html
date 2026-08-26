@@ -3,9 +3,9 @@
       data-namespace-typo3-fluid="true">
 <f:spaceless>
 <div class="tx-toolbox-welcome__contact">
-    <f:if condition="{card.image}">
+    <f:if condition="{card.imageUri}">
         <img class="tx-toolbox-welcome__avatar"
-             src="{f:uri.resource(path: card.image)}"
+             src="{card.imageUri}"
              alt=""
              width="40"
              height="40" />
