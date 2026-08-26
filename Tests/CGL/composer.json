@@ -51,7 +51,7 @@
 		],
 		"fix:editorconfig": "@lint:editorconfig --fix",
 		"fix:php": "@php vendor/bin/php-cs-fixer --config=.php-cs-fixer.php fix",
-		"fix:yaml": "find ./ ! -path './../../node_modules/*' ! -path './../../vendor/*' ! -path './vendor/*' ! -path './../../typo3_toolbox/*'  \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
+		"fix:yaml": "find ../../ ! -path '*/node_modules/*' ! -path '*/vendor/*' ! -path '*/public/*' ! -path '*/var/*' ! -path '*/config/*' ! -path '*/typo3_toolbox/*'  \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"lint": [
 			"@lint:composer",
 			"@lint:editorconfig",
@@ -60,11 +60,11 @@
 			"@lint:typoscript"
 		],
 		"lint:composer": "@fix:composer --dry-run",
-		"lint:editorconfig": "ec --git-only",
+		"lint:editorconfig": "cd ../.. && ec --git-only",
 		"lint:language": "@composer validate-translations ./../../Resources/Private/Language",
 		"lint:php": "@fix:php --dry-run",
 		"lint:typoscript": "@php typoscript-lint",
-		"lint:yaml": "find ./ ! -path './../../node_modules/*' ! -path './../../vendor/*' ! -path './vendor/*' ! -path './../../typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
+		"lint:yaml": "find ../../ ! -path '*/node_modules/*' ! -path '*/vendor/*' ! -path '*/public/*' ! -path '*/var/*' ! -path '*/config/*' ! -path '*/typo3_toolbox/*' \\( -name '*.yaml' -o -name '*.yml' \\) | xargs -r yaml-lint",
 		"migration": [
 			"@migration:rector"
 		],
