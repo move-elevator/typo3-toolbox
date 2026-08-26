@@ -91,33 +91,6 @@ final readonly class OptionsReader
     }
 
     /**
-     * @param list<string> $default
-     * @return list<string>
-     */
-    public function stringList(string $key, array $default = []): array
-    {
-        if (!$this->has($key)) {
-            return $default;
-        }
-        $value = $this->data[$key];
-        if (!is_array($value)) {
-            $this->fail($key, 'must be a list of strings');
-        }
-
-        $list = [];
-        $index = 0;
-        foreach ($value as $item) {
-            if (!is_string($item) && !is_int($item)) {
-                $this->fail($key . '.' . $index, 'must be a string');
-            }
-            $list[] = (string)$item;
-            ++$index;
-        }
-
-        return $list;
-    }
-
-    /**
      * @return array<string, string>
      */
     public function stringMap(string $key): array
