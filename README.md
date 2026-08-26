@@ -21,6 +21,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
 - Adds a backend avatar provider that assigns the move elevator logo to backend users with an `@move-elevator.de` email address (when no custom avatar is set)
+- Adds a reusable Fluid partial which preloads webfonts via `<link rel="preload">` in the page head
 
 ## Version support
 
@@ -102,6 +103,54 @@ The `ContentMinifierEventListener` automatically minifies the HTML output of all
 The `MoveElevatorAvatarProvider` automatically assigns the move elevator logo (`Resources/Public/Icons/me.svg`) as the backend avatar for any backend user whose email address ends with `@move-elevator.de`.
 
 Personal avatars uploaded via the user settings always take precedence — the logo is only used as a fallback when no custom avatar is configured.
+
+### Font Preload
+
+The partial `Resources/Private/Partials/PageView/FontPreload.html` renders one `<link rel="preload">` tag per webfont into the page head. It replaces the boilerplate of an `<f:for>` loop wrapped in `<f:page.headerData>` that would otherwise be repeated in every project.
+
+#### Setup
+
+The extension does not register its partial path itself, since it cannot know how a project builds its page object. Add it once per project.
+
+For a `PAGEVIEW` page object, register the extension's `Resources/Private/` directory — `PAGEVIEW` derives its template, partial and layout paths from `paths`:
+
+```
+page.10.paths.1 = EXT:typo3_toolbox/Resources/Private/
+```
+
+For a `FLUIDTEMPLATE` page object, register the partial directory directly:
+
+```
+page.10.partialRootPaths.1 = EXT:typo3_toolbox/Resources/Private/Partials/
+```
+
+Fluid resolves the highest index first, so a low index keeps the project's own partials in charge and lets it override `PageView/FontPreload` with its own copy.
+
+#### Usage
+
+```html
+<f:render partial="FontPreload" arguments="{
+    path: 'EXT:site_package/Resources/Public/Fonts/',
+    fonts: {
+        0: 'barlow-condensed-v13-latin-regular.woff2',
+        1: 'barlow-condensed-v13-latin-500.woff2',
+        2: 'barlow-v13-latin-regular.woff2',
+        3: 'instrument-serif-v5-latin-italic.woff2'
+    }
+}"/>
+```
+
+#### Arguments
+
+| Argument          | Type       | Default      | Description                                                                                |
+|-------------------|------------|--------------|--------------------------------------------------------------------------------------------|
+| `fonts`           | `string[]` | required     | Font files to preload, each one prefixed with `path`                                       |
+| `path`            | `string`   | `''`         | Base path prepended to every font file, e.g. `EXT:site_package/Resources/Public/Fonts/`     |
+| `type`            | `string`   | `font/woff2` | MIME type rendered as the `type` attribute                                                 |
+| `crossorigin`     | `string`   | `anonymous`  | `crossorigin` attribute value, required so the preloaded font is reused by the font loader  |
+| `useCacheBusting` | `bool`     | `false`      | Whether to append a cache buster to the resource URI                                       |
+
+Arguments are declared via `<f:argument>`, so omitting `fonts` raises a `MissingArgumentException` instead of silently rendering nothing.
 
 ### Middlewares
 
