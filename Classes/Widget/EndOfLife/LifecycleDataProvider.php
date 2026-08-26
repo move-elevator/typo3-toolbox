@@ -41,9 +41,9 @@ final readonly class LifecycleDataProvider
      * Resolves a component request to its lifecycle, or null if the product or
      * version is unknown to endoflife.date (the component is then skipped).
      */
-    public function resolve(ComponentRequest $request): ?ComponentLifecycle
+    public function resolve(ComponentRequest $request, \DateTimeImmutable $now): ?ComponentLifecycle
     {
-        $releases = $this->fetchReleases($request->product);
+        $releases = $this->fetchReleases($request->product, $now);
         if ($releases === null) {
             return null;
         }
@@ -140,29 +140,64 @@ final readonly class LifecycleDataProvider
     /**
      * @return list<array<string, mixed>>|null
      */
-    private function fetchReleases(string $product): ?array
+    private function fetchReleases(string $product, \DateTimeImmutable $now): ?array
     {
-        $cache = $this->cacheManager->getCache(Configuration::EXT_KEY->value);
         $identifier = self::CACHE_PREFIX . (string)preg_replace('/[^a-z0-9]/', '_', strtolower($product));
-        $now = (int)(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getPropertyFromAspect('date', 'timestamp') ?? time());
+        $timestamp = $now->getTimestamp();
 
-        $entry = $cache->get($identifier);
-        $cachedReleases = is_array($entry) ? $this->normalizeReleases($entry['releases'] ?? null) : null;
-        $fetchedAt = is_array($entry) ? (int)($entry['fetchedAt'] ?? 0) : 0;
+        [$cachedReleases, $fetchedAt] = $this->readCache($identifier);
 
-        if ($cachedReleases !== null && ($now - $fetchedAt) < self::FRESH_SECONDS) {
+        if ($cachedReleases !== null && ($timestamp - $fetchedAt) < self::FRESH_SECONDS) {
             return $cachedReleases;
         }
 
         $fresh = $this->requestReleases($product);
         if ($fresh !== null) {
-            $cache->set($identifier, ['fetchedAt' => $now, 'releases' => $fresh], [], 0);
+            $this->writeCache($identifier, $timestamp, $fresh);
 
             return $fresh;
         }
 
         // API unreachable: fall back to a stale copy if we ever cached one.
         return $cachedReleases;
+    }
+
+    /**
+     * @return array{0: list<array<string, mixed>>|null, 1: int}
+     */
+    private function readCache(string $identifier): array
+    {
+        try {
+            $entry = $this->cacheManager->getCache(Configuration::EXT_KEY->value)->get($identifier);
+        } catch (\Throwable $exception) {
+            $this->logger->warning('Could not read lifecycle cache entry "{identifier}": {message}', [
+                'identifier' => $identifier,
+                'message' => $exception->getMessage(),
+            ]);
+
+            return [null, 0];
+        }
+
+        return [
+            is_array($entry) ? $this->normalizeReleases($entry['releases'] ?? null) : null,
+            is_array($entry) ? (int)($entry['fetchedAt'] ?? 0) : 0,
+        ];
+    }
+
+    /**
+     * @param list<array<string, mixed>> $releases
+     */
+    private function writeCache(string $identifier, int $fetchedAt, array $releases): void
+    {
+        try {
+            $this->cacheManager->getCache(Configuration::EXT_KEY->value)
+                ->set($identifier, ['fetchedAt' => $fetchedAt, 'releases' => $releases], [], 0);
+        } catch (\Throwable $exception) {
+            $this->logger->warning('Could not write lifecycle cache entry "{identifier}": {message}', [
+                'identifier' => $identifier,
+                'message' => $exception->getMessage(),
+            ]);
+        }
     }
 
     /**

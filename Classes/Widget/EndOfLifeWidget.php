@@ -57,7 +57,7 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
 
         $components = [];
         foreach ($this->collectComponentRequests($options) as $request) {
-            $lifecycle = $this->lifecycleDataProvider->resolve($request);
+            $lifecycle = $this->lifecycleDataProvider->resolve($request, $now);
             if ($lifecycle !== null) {
                 $components[] = $lifecycle;
             }
