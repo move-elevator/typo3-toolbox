@@ -21,7 +21,9 @@ final class ContentMinifierEventListener
     * convert tabs to spaces
     * convert multiple spaces to one single space
     * remove spaces between tags, but ignore on some inline-tags
-    * replace non-HTML5 conform closing tags
+    * remove spaces before tag close
+    * remove the redundant self-closing marker from HTML void elements,
+    * but keep it in foreign content, where SVG relies on it to close elements
     */
     private function minify(string $content): string
     {
@@ -31,7 +33,8 @@ final class ContentMinifierEventListener
             '/\t/' => ' ',
             '/[ ]+/' => ' ',
             '/\>\s\<(?:(?!(?:a|b|strong|img|em|i|span|small|big)[ ]))/' => '><',
-            '/" \/>/' => '">',
+            '/" (\/?)>/' => '"$1>',
+            '/(<(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)\b[^>]*?)\s*\/>/' => '$1>',
         ];
 
         $content = $this->removeUnnecessaryTypeAttributesForStyleAndScriptTags($content);
