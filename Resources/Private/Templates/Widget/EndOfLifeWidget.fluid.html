@@ -13,7 +13,7 @@
                     </f:for>
                 </div>
                 <div class="tx-toolbox-eol__rows">
-                    <f:if condition="{timeline.todayPercent}">
+                    <f:if condition="{timeline.showToday}">
                         <span class="tx-toolbox-eol__today"
                               style="left: {timeline.todayPercent}%"
                               title="{f:translate(key: '{ll}widgets.endOfLife.today')}"></span>
@@ -50,7 +50,7 @@
                                     </f:switch>
                                 </f:if>
                             </div>
-                            <div class="tx-toolbox-eol__track">
+                            <div class="tx-toolbox-eol__track" aria-hidden="true">
                                 <span class="tx-toolbox-eol__segment tx-toolbox-eol__segment--spacer"
                                       style="width: {bar.leadingPercent}%"
                                       title="{f:translate(key: '{ll}widgets.endOfLife.phase.notReleased')}"></span>
@@ -63,6 +63,14 @@
                                           title="{phaseLabel}: {from} – {until}"></span>
                                 </f:for>
                             </div>
+                            <span class="visually-hidden">
+                                <f:if condition="{bar.leadingPercent} > 0">
+                                    <f:translate key="{ll}widgets.endOfLife.phase.notReleased" />.
+                                </f:if>
+                                <f:for each="{bar.segments}" as="segment">
+                                    <f:translate key="{ll}widgets.endOfLife.phase.{segment.type}" />: {segment.startLabel -> f:or(alternative: unknownDate)} – {segment.endLabel -> f:or(alternative: openEnd)}.
+                                </f:for>
+                            </span>
                         </div>
                     </f:for>
                 </div>

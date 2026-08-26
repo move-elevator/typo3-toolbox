@@ -24,7 +24,8 @@ final class TimelineFactory
      * @param list<ComponentLifecycle> $components
      * @return array{
      *     bars: list<array{label: string, version: string, leadingPercent: float, segments: list<array{type: string, cssModifier: string, widthPercent: float, start: ?\DateTimeImmutable, end: ?\DateTimeImmutable, startLabel: ?string, endLabel: ?string}>, badge: ?array{kind: string, date: ?\DateTimeImmutable}}>,
-     *     todayPercent: ?float,
+     *     showToday: bool,
+     *     todayPercent: float,
      *     years: list<array{year: int, percent: float}>
      * }
      */
@@ -37,7 +38,8 @@ final class TimelineFactory
 
         return [
             'bars' => $bars,
-            'todayPercent' => $window->contains($now) ? round($window->offsetPercentOf($now), 4) : null,
+            'showToday' => $window->contains($now),
+            'todayPercent' => round($window->offsetPercentOf($now), 4),
             'years' => $this->years($window),
         ];
     }
