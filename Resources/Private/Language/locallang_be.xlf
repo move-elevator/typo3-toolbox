@@ -25,7 +25,7 @@
 				<source>move:elevator Editor</source>
 			</trans-unit>
 			<trans-unit id="dashboard.moveElevatorEditor.description">
-				<source>Recent edits and quick actions for the daily editing workflow.</source>
+				<source>The personalized Welcome widget for the daily editing workflow.</source>
 			</trans-unit>
 			<trans-unit id="dashboard.moveElevatorAdmin">
 				<source>move:elevator Admin</source>
@@ -53,27 +53,6 @@
 			</trans-unit>
 			<trans-unit id="widgets.welcome.greeting.anonymous">
 				<source>Welcome!</source>
-			</trans-unit>
-			<trans-unit id="widgets.recentEdits.title">
-				<source>My Recent Edits</source>
-			</trans-unit>
-			<trans-unit id="widgets.recentEdits.description">
-				<source>Your own most recent changes only — never those of other editors. Each entry links straight back into its edit form.</source>
-			</trans-unit>
-			<trans-unit id="widgets.recentEdits.hint">
-				<source>Only your own changes</source>
-			</trans-unit>
-			<trans-unit id="widgets.recentEdits.empty">
-				<source>You haven't edited any records yet. Changes made by other editors are not listed here.</source>
-			</trans-unit>
-			<trans-unit id="widgets.quickActions.title">
-				<source>Quick Actions</source>
-			</trans-unit>
-			<trans-unit id="widgets.quickActions.description">
-				<source>Configurable shortcuts for the recurring editing workflows of this project.</source>
-			</trans-unit>
-			<trans-unit id="widgets.quickActions.empty">
-				<source>No quick actions are configured.</source>
 			</trans-unit>
 			<trans-unit id="widgets.endOfLife.title">
 				<source>End-of-Life</source>

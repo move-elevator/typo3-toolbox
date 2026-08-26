@@ -22,14 +22,6 @@ use MoveElevator\Typo3Toolbox\Widget\Welcome\LinksCard;
  */
 final class WidgetOptionsFactory
 {
-    private const int DEFAULT_RECENT_EDITS_LIMIT = 8;
-    private const array DEFAULT_EXCLUDED_TABLES = [
-        'sys_file_reference',
-        'sys_file_metadata',
-        'sys_history',
-        'sys_log',
-        'sys_refindex',
-    ];
     private const int DEFAULT_WARNING_THRESHOLD_DAYS = 180;
     private const string DEFAULT_WINDOW_FROM = '-1 year';
     private const string DEFAULT_WINDOW_TO = '+4 years';
@@ -37,35 +29,6 @@ final class WidgetOptionsFactory
     private const string DEFAULT_BRANDING_LOGO = 'EXT:typo3_toolbox/Resources/Public/Icons/me.svg';
     private const string DEFAULT_BRANDING_CLAIM = 'move:elevator';
     private const string DEFAULT_BRANDING_URL = 'https://www.move-elevator.de/';
-
-    /**
-     * @param array<string, mixed> $options
-     */
-    public function createRecentEditsOptions(array $options): RecentEditsOptions
-    {
-        $reader = new OptionsReader($options);
-
-        return new RecentEditsOptions(
-            limit: max(1, $reader->int('limit', self::DEFAULT_RECENT_EDITS_LIMIT)),
-            allowedTables: $reader->stringList('allowedTables'),
-            excludedTables: $reader->stringList('excludedTables', self::DEFAULT_EXCLUDED_TABLES),
-        );
-    }
-
-    /**
-     * @param array<string, mixed> $options
-     */
-    public function createQuickActionsOptions(array $options): QuickActionsOptions
-    {
-        $reader = new OptionsReader($options);
-
-        $actions = [];
-        foreach ($reader->children('actions') as $action) {
-            $actions[] = $this->createQuickAction($action);
-        }
-
-        return new QuickActionsOptions($actions);
-    }
 
     /**
      * @param array<string, mixed> $options
@@ -191,69 +154,6 @@ final class WidgetOptionsFactory
         }
 
         return $links;
-    }
-
-    private function createQuickAction(OptionsReader $action): QuickAction
-    {
-        $present = $action->present(['url', 'module', 'record']);
-        if (count($present) !== 1) {
-            $action->failSelf('an action requires exactly one of "url", "module" or "record"');
-        }
-
-        $type = QuickActionType::from($present[0]);
-        $label = $action->requireString('label');
-        $iconIdentifier = $action->string('icon');
-        $beGroups = $action->stringList('beGroups');
-
-        return match ($type) {
-            QuickActionType::Url => new QuickAction(
-                $type,
-                $label,
-                $iconIdentifier,
-                $action->requireString('url'),
-                null,
-                [],
-                null,
-                null,
-                $beGroups,
-            ),
-            QuickActionType::Module => new QuickAction(
-                $type,
-                $label,
-                $iconIdentifier,
-                null,
-                $action->requireString('module'),
-                $action->stringMap('params'),
-                null,
-                null,
-                $beGroups,
-            ),
-            QuickActionType::Record => $this->createRecordAction($action, $label, $iconIdentifier, $beGroups),
-        };
-    }
-
-    /**
-     * @param list<string> $beGroups
-     */
-    private function createRecordAction(
-        OptionsReader $action,
-        string $label,
-        ?string $iconIdentifier,
-        array $beGroups,
-    ): QuickAction {
-        $record = $action->child('record');
-
-        return new QuickAction(
-            QuickActionType::Record,
-            $label,
-            $iconIdentifier,
-            null,
-            null,
-            [],
-            $record->requireString('table'),
-            $record->int('pid', 0),
-            $beGroups,
-        );
     }
 
     private function resolveDate(

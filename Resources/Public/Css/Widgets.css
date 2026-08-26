@@ -1,6 +1,6 @@
 /*
  * Styles for the move:elevator dashboard widgets
- * (Welcome, Recent Edits, Quick Actions, End-of-Life).
+ * (Welcome, End-of-Life).
  */
 
 /*
@@ -159,92 +159,6 @@
 .tx-toolbox-welcome__logo {
     width: auto;
     height: 18px;
-}
-
-/* Recent Edits ----------------------------------------------------------- */
-
-/*
- * A caption, not a section header — no full-width rule, which made an otherwise
- * short list look like a nearly empty table.
- */
-.tx-toolbox-recent-edits__hint {
-    display: inline-flex;
-    align-items: center;
-    gap: .3125rem;
-    margin: 0 0 .375rem;
-    font-size: .6875rem;
-}
-
-.tx-toolbox-recent-edits__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.tx-toolbox-recent-edits__item + .tx-toolbox-recent-edits__item {
-    border-top: 1px solid var(--tx-toolbox-border);
-}
-
-.tx-toolbox-recent-edits__link {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    padding: .375rem .25rem;
-    text-decoration: none;
-    color: inherit;
-}
-
-.tx-toolbox-recent-edits__link:hover,
-.tx-toolbox-recent-edits__link:focus-visible {
-    background: var(--tx-toolbox-hover-bg);
-}
-
-.tx-toolbox-recent-edits__icon {
-    flex: 0 0 auto;
-}
-
-.tx-toolbox-recent-edits__body {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    line-height: 1.25;
-}
-
-.tx-toolbox-recent-edits__title,
-.tx-toolbox-recent-edits__meta {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.tx-toolbox-recent-edits__meta {
-    font-size: .85em;
-}
-
-.tx-toolbox-recent-edits__age {
-    flex: 0 0 auto;
-    font-size: .85em;
-    white-space: nowrap;
-}
-
-/* Quick Actions ---------------------------------------------------------- */
-
-/*
- * Buttons keep their natural width. A fixed-column grid produced tidier rows but
- * truncated longer labels ("Neues Inhaltsele…"), and an unreadable label is a
- * worse defect than a ragged right edge.
- */
-.tx-toolbox-quick-actions__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .375rem;
-}
-
-.tx-toolbox-quick-actions__action {
-    display: inline-flex;
-    align-items: center;
-    gap: .375rem;
 }
 
 /* End-of-Life ------------------------------------------------------------ */

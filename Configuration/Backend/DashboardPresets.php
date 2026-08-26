@@ -9,8 +9,6 @@ return [
         'iconIdentifier' => 'content-dashboard',
         'defaultWidgets' => [
             'typo3ToolboxWelcome',
-            'typo3ToolboxRecentEdits',
-            'typo3ToolboxQuickActions',
         ],
         'showInWizard' => true,
     ],
@@ -20,8 +18,6 @@ return [
         'iconIdentifier' => 'content-dashboard',
         'defaultWidgets' => [
             'typo3ToolboxWelcome',
-            'typo3ToolboxRecentEdits',
-            'typo3ToolboxQuickActions',
             'typo3ToolboxEndOfLife',
             't3information',
             'sysLogErrors',

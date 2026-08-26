@@ -21,7 +21,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a sentry middleware and frontend module ...
 - Adds a custom TYPO3 page renderer template which removes some unnecessary spaces and changes the order of inline CSS injection
 - Adds a backend avatar provider that assigns the move elevator logo to backend users with an `@move-elevator.de` email address (when no custom avatar is set)
-- Adds four backend dashboard widgets (Welcome, Recent Edits, Quick Actions, End-of-Life) in a dedicated *move:elevator* widget group, plus `moveElevatorEditor` and `moveElevatorAdmin` dashboard presets
+- Adds two backend dashboard widgets (Welcome, End-of-Life) in a dedicated *move:elevator* widget group, plus `moveElevatorEditor` and `moveElevatorAdmin` dashboard presets
 
 ## Version support
 
@@ -106,10 +106,10 @@ Personal avatars uploaded via the user settings always take precedence — the l
 
 ### Dashboard Widgets
 
-The extension ships four backend dashboard widgets, grouped under the
+The extension ships two backend dashboard widgets, grouped under the
 *move:elevator* widget group. Two ready-made dashboard presets are provided:
-`moveElevatorEditor` (Welcome + Recent Edits + Quick Actions) and
-`moveElevatorAdmin` (all four widgets plus the core `t3information` and
+`moveElevatorEditor` (Welcome) and
+`moveElevatorAdmin` (both widgets plus the core `t3information` and
 `sysLogErrors` widgets).
 
 Widget options are configured at registration time. To adjust them for your
@@ -185,81 +185,6 @@ services:
         description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.welcome.description'
         iconIdentifier: 'actions-heart'
         height: 'medium'
-        width: 'medium'
-```
-
-#### Recent Edits (`typo3ToolboxRecentEdits`)
-
-Lists **only the current user's own** most recent changes (read from
-`sys_history`, grouped per record), each linking straight back into its edit
-form. Changes made by other editors never appear — the widget answers "where was
-I?", not "what happened on the site?". That is what sets it apart from the core
-`latestChangedPages` widget, which reports every editor's changes and rolls
-content elements up to their page; this one shows the record itself, across all
-TCA tables. Records the user can no longer access — unknown TCA tables, deleted
-records and tables failing the `tables_modify` check — are skipped. The widget
-is intentionally uncached so it feels live right after an edit.
-
-The user-scoped nature is surfaced in the UI as well: the widget is titled *My
-Recent Edits* and carries an "Only your own changes" caption above the list.
-
-| Option           | Type       | Default                                                                                          | Description                                        |
-|------------------|------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------|
-| `limit`          | `int`      | `8`                                                                                              | Maximum number of records shown.                   |
-| `allowedTables`  | `string[]` | `[]` (all)                                                                                       | If set, only these tables are shown.               |
-| `excludedTables` | `string[]` | `sys_file_reference`, `sys_file_metadata`, `sys_history`, `sys_log`, `sys_refindex`              | Tables never shown (technical tables by default).  |
-
-```yaml
-services:
-  MoveElevator\Typo3Toolbox\Widget\RecentEditsWidget:
-    arguments:
-      $options:
-        limit: 12
-        excludedTables: ['sys_file_reference', 'sys_log']
-    tags:
-      - name: dashboard.widget
-        identifier: typo3ToolboxRecentEdits
-        groupNames: 'moveElevator'
-        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.title'
-        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.description'
-        iconIdentifier: 'actions-history'
-        height: 'medium'
-        width: 'medium'
-```
-
-#### Quick Actions (`typo3ToolboxQuickActions`)
-
-A configurable shortcut list for the recurring editor workflows of a project.
-Each action is exactly one of three types:
-
-- **`url`** — an external link
-- **`module`** — a backend module route (with optional `params`)
-- **`record`** — `{ table, pid }`, opens the "create new record" form on that page
-
-An optional `beGroups` filter hides an action for users outside the listed
-backend groups (admins always see everything). Actions referencing unknown
-tables or unresolvable module routes are skipped silently. Misconfiguration
-fails fast at render time with the exact config path, e.g.
-`actions.2: an action requires exactly one of "url", "module" or "record"`.
-
-```yaml
-services:
-  MoveElevator\Typo3Toolbox\Widget\QuickActionsWidget:
-    arguments:
-      $options:
-        actions:
-          - { label: 'New article', icon: 'actions-plus', record: { table: 'tx_news_domain_model_news', pid: 42 } }
-          - { label: 'Media', module: 'media_management' }
-          - { label: 'List view', module: 'web_list', params: { id: 1 } }
-          - { label: 'Style guide', url: 'https://example.com/styleguide', beGroups: ['2'] }
-    tags:
-      - name: dashboard.widget
-        identifier: typo3ToolboxQuickActions
-        groupNames: 'moveElevator'
-        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.title'
-        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.description'
-        iconIdentifier: 'actions-lightning'
-        height: 'small'
         width: 'medium'
 ```
 

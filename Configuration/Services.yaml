@@ -17,28 +17,6 @@ services:
         height: 'medium'
         width: 'medium'
 
-  MoveElevator\Typo3Toolbox\Widget\RecentEditsWidget:
-    tags:
-      - name: dashboard.widget
-        identifier: typo3ToolboxRecentEdits
-        groupNames: 'moveElevator'
-        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.title'
-        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.recentEdits.description'
-        iconIdentifier: 'actions-history'
-        height: 'medium'
-        width: 'medium'
-
-  MoveElevator\Typo3Toolbox\Widget\QuickActionsWidget:
-    tags:
-      - name: dashboard.widget
-        identifier: typo3ToolboxQuickActions
-        groupNames: 'moveElevator'
-        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.title'
-        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.quickActions.description'
-        iconIdentifier: 'actions-lightning'
-        height: 'small'
-        width: 'medium'
-
   MoveElevator\Typo3Toolbox\Widget\EndOfLifeWidget:
     tags:
       - name: dashboard.widget
