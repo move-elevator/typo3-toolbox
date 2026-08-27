@@ -5,3 +5,25 @@ services:
     public: false
   MoveElevator\Typo3Toolbox\:
     resource: '../Classes/*'
+
+  MoveElevator\Typo3Toolbox\Widget\WelcomeWidget:
+    tags:
+      - name: dashboard.widget
+        identifier: typo3ToolboxWelcome
+        groupNames: 'moveElevator'
+        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.welcome.title'
+        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.welcome.description'
+        iconIdentifier: 'actions-heart'
+        height: 'medium'
+        width: 'medium'
+
+  MoveElevator\Typo3Toolbox\Widget\EndOfLifeWidget:
+    tags:
+      - name: dashboard.widget
+        identifier: typo3ToolboxEndOfLife
+        groupNames: 'moveElevator'
+        title: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.endOfLife.title'
+        description: 'LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:widgets.endOfLife.description'
+        iconIdentifier: 'content-widget-chart-bar'
+        height: 'medium'
+        width: 'large'

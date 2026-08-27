@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:variable name="ll">LLL:EXT:typo3_toolbox/Resources/Private/Language/locallang_be.xlf:</f:variable>
+<div class="widget-content-main tx-toolbox-widget tx-toolbox-welcome">
+    <p class="tx-toolbox-welcome__greeting">
+        <f:if condition="{emoji}">
+            <span class="tx-toolbox-welcome__emoji" aria-hidden="true">{emoji}</span>
+        </f:if>
+        <f:if condition="{userName}">
+            <f:then><f:translate key="{ll}{greetingKey}" arguments="{0: userName}" /></f:then>
+            <f:else><f:translate key="{ll}widgets.welcome.greeting.anonymous" /></f:else>
+        </f:if>
+    </p>
+
+    <f:if condition="{intro}">
+        <p class="tx-toolbox-welcome__intro"><f:translate key="{intro}" default="{intro}" /></p>
+    </f:if>
+
+    <f:if condition="{cards}">
+        <div class="tx-toolbox-welcome__cards">
+            <f:for each="{cards}" as="card">
+                <section class="tx-toolbox-welcome__card">
+                    <f:if condition="{card.title}">
+                        <h2 class="tx-toolbox-welcome__card-title"><f:translate key="{card.title}" default="{card.title}" /></h2>
+                    </f:if>
+                    <f:render partial="Widget/Welcome/{card.partial}" arguments="{card: card}" />
+                </section>
+            </f:for>
+        </div>
+    </f:if>
+
+    <f:if condition="{branding.enabled}">
+        <p class="tx-toolbox-welcome__branding">
+            <f:if condition="{branding.url}">
+                <f:then>
+                    <a class="tx-toolbox-welcome__branding-link"
+                       href="{branding.url}"
+                       target="_blank"
+                       rel="noreferrer noopener">
+                        <img class="tx-toolbox-welcome__logo" src="{brandingLogoUri}" alt="" height="18" />
+                        <span>{branding.claim}</span>
+                    </a>
+                </f:then>
+                <f:else>
+                    <img class="tx-toolbox-welcome__logo" src="{brandingLogoUri}" alt="" height="18" />
+                    <span>{branding.claim}</span>
+                </f:else>
+            </f:if>
+        </p>
+    </f:if>
+</div>
+</html>

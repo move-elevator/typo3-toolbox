@@ -1,0 +1,35 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:spaceless>
+<div class="tx-toolbox-welcome__contact">
+    <f:if condition="{card.imageUri}">
+        <img class="tx-toolbox-welcome__avatar"
+             src="{card.imageUri}"
+             alt=""
+             width="40"
+             height="40" />
+    </f:if>
+    <div class="tx-toolbox-welcome__contact-body">
+        <span class="tx-toolbox-welcome__contact-name">{card.name}</span>
+        <f:if condition="{card.role}">
+            <span class="tx-toolbox-welcome__contact-role text-body-secondary">
+                <f:translate key="{card.role}" default="{card.role}" />
+            </span>
+        </f:if>
+        <f:if condition="{card.channels}">
+            <ul class="tx-toolbox-welcome__channels">
+                <f:for each="{card.channels}" as="channel">
+                    <li>
+                        <a class="tx-toolbox-welcome__channel" href="{channel.href}">
+                            <core:icon identifier="{channel.iconIdentifier}" size="small" />
+                            <span>{channel.label}</span>
+                        </a>
+                    </li>
+                </f:for>
+            </ul>
+        </f:if>
+    </div>
+</div>
+</f:spaceless>
+</html>

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php85\Rector\Property\AddOverrideAttributeToOverriddenPropertiesRector;
 use Rector\PostRector\Rector\NameImportingPostRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
@@ -41,5 +42,9 @@ return RectorConfig::configure()
             'ClassAliasMap.php',
         ],
         GeneralUtilityMakeInstanceToConstructorPropertyRector::class,
+        // `#[\Override]` may only target properties as of PHP 8.5, while this
+        // package still supports 8.4 — there the attribute is a fatal error.
+        // Drop this entry once the PHP requirement moves past 8.4.
+        AddOverrideAttributeToOverriddenPropertiesRector::class,
     ])
 ;

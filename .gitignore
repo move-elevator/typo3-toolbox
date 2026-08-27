@@ -4,3 +4,4 @@
 /var
 /vendor
 /package-lock.json
+/Build/phpunit/.phpunit.cache

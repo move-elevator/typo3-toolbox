@@ -16,6 +16,7 @@
 		"typo3/cms-adminpanel": "^14.3",
 		"typo3/cms-backend": "^14.3",
 		"typo3/cms-core": "^14.3",
+		"typo3/cms-dashboard": "^14.3",
 		"typo3/cms-frontend": "^14.3",
 		"typo3/cms-linkvalidator": "^14.3",
 		"typo3fluid/fluid": "^5.3"
@@ -26,11 +27,17 @@
 		"helhum/typo3-console": "^8.3",
 		"move-elevator/composer-translation-validator": "^1.4",
 		"typo3/cms-base-distribution": "^14.3",
-		"typo3/cms-lowlevel": "^14.3"
+		"typo3/cms-lowlevel": "^14.3",
+		"typo3/testing-framework": "^9.0"
 	},
 	"autoload": {
 		"psr-4": {
 			"MoveElevator\\Typo3Toolbox\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"MoveElevator\\Typo3Toolbox\\Tests\\": "Tests"
 		}
 	},
 	"config": {
@@ -51,6 +58,10 @@
 		"post-install-cmd": [
 			"@cgl install"
 		],
-		"cgl": "@composer -d Tests/CGL --"
+		"cgl": "@composer -d Tests/CGL --",
+		"test": [
+			"@test:unit"
+		],
+		"test:unit": "phpunit -c Build/phpunit/UnitTests.xml"
 	}
 }
