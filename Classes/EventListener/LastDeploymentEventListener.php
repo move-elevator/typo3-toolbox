@@ -87,7 +87,7 @@ class LastDeploymentEventListener
 
             $lastModifiedTime = 0;
             foreach ($iterator as $fileinfo) {
-                if ($fileinfo->isFile()) {
+                if ($fileinfo instanceof \SplFileInfo && $fileinfo->isFile()) {
                     $lastModifiedTime = max($lastModifiedTime, $fileinfo->getMTime());
                 }
             }

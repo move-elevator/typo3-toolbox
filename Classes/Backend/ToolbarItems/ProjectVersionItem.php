@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MoveElevator\Typo3Toolbox\Backend\ToolbarItems;
 
 use MoveElevator\Typo3Toolbox\Enumeration\Configuration;
