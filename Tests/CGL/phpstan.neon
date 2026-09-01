@@ -17,3 +17,15 @@ parameters:
 
 	type_coverage:
 		constant: 0 # TODO: Set to 100, when PHP 8.3 is minimum requirement
+
+	ergebnis:
+		# AbstractRepository is a public extension point: sealing its methods would
+		# fatal out any third-party repository that overrides them
+		finalInAbstractClass:
+			enabled: false
+		# Named arguments keep the value object and widget construction readable
+		noNamedArgument:
+			enabled: false
+		# TYPO3 APIs such as WidgetInterface require constructor defaults (e.g. `array $options = []`)
+		noConstructorParameterWithDefaultValue:
+			enabled: false
