@@ -112,7 +112,12 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
             return null;
         }
 
-        $content = file_get_contents($absoluteFile);
+        set_error_handler(static fn (): bool => true, E_WARNING);
+        try {
+            $content = file_get_contents($absoluteFile);
+        } finally {
+            restore_error_handler();
+        }
 
         return $content !== false ? $content : null;
     }
