@@ -53,7 +53,7 @@ final readonly class SaveCloseButtonEventListener
         $event->setButtons($buttons);
     }
 
-    protected function getLanguageService(): ?LanguageService
+    private function getLanguageService(): ?LanguageService
     {
         return $GLOBALS['LANG'];
     }
