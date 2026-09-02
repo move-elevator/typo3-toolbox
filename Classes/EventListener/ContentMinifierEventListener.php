@@ -16,7 +16,8 @@ final class ContentMinifierEventListener
     }
 
     /**
-    * remove JavaScript inline comments
+    * keep <script> and <style> contents untouched, so a JavaScript `//` line comment doesn't
+    * lose its line terminator and swallow the following code
     * convert linebreaks to spaces
     * convert tabs to spaces
     * convert multiple spaces to one single space
@@ -43,7 +44,36 @@ final class ContentMinifierEventListener
         $content = $this->removeCkeditorDataAttributesFromListItems($content);
         $content = $this->removeWhitespacesAfterTagStartAndBeforeTagClose($content);
 
-        return (string)preg_replace(array_keys($replacements), array_values($replacements), $content);
+        [$content, $preservedScriptAndStyleContents] = $this->extractScriptAndStyleContents($content);
+        $content = (string)preg_replace(array_keys($replacements), array_values($replacements), $content);
+
+        return strtr($content, $preservedScriptAndStyleContents);
+    }
+
+    /**
+     * Protects the raw content of <script> and <style> tags from the newline/tab/space-collapsing
+     * replacements in minify(), since that would swallow the line terminator of a JavaScript `//`
+     * line comment and corrupt everything after it.
+     *
+     * @return array{0: string, 1: array<string, string>}
+     */
+    private function extractScriptAndStyleContents(string $content): array
+    {
+        $preservedContents = [];
+        $nonce = bin2hex(random_bytes(8));
+
+        $content = (string)preg_replace_callback(
+            '/(<(script|style)\b[^>]*>)(.*?)(<\/\2>)/s',
+            static function (array $matches) use (&$preservedContents, $nonce) {
+                $placeholder = "\x00{$nonce}" . count($preservedContents) . "\x00";
+                $preservedContents[$placeholder] = $matches[3];
+
+                return $matches[1] . $placeholder . $matches[4];
+            },
+            $content
+        );
+
+        return [$content, $preservedContents];
     }
 
     private function removeUnnecessaryTypeAttributesForStyleAndScriptTags(string $content): string

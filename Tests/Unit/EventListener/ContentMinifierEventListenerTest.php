@@ -82,6 +82,21 @@ final class ContentMinifierEventListenerTest extends UnitTestCase
             '<li data-list-item-id="e123">Item</li>',
             '<li>Item</li>',
         ];
+
+        yield 'inline script line comment is not swallowed by newline collapsing' => [
+            "<script>\n\t(function() {\n\t\t// some comment\n\t\tdoSomething();\n\t})();\n</script>",
+            "<script>\n\t(function() {\n\t\t// some comment\n\t\tdoSomething();\n\t})();\n</script>",
+        ];
+
+        yield 'multiline style content is preserved while surrounding whitespace is still collapsed' => [
+            "<div>\n\t<style>\n\t\t.a {\n\t\t\tcolor: red;\n\t\t}\n\t</style>\n</div>",
+            "<div><style>\n\t\t.a {\n\t\t\tcolor: red;\n\t\t}\n\t</style></div>",
+        ];
+
+        yield 'whitespace around a script tag is still collapsed while its content is preserved' => [
+            "<div>\n\t<script>\n\t\t// keep\n\t\tdoSomething();\n\t</script>\n</div>",
+            "<div><script>\n\t\t// keep\n\t\tdoSomething();\n\t</script></div>",
+        ];
     }
 
     #[Test]
