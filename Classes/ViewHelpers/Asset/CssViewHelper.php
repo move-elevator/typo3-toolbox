@@ -93,8 +93,8 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
                 $this->assetCollector->addInlineStyleSheet($identifier, $processedContent, $attributes, $options);
             }
         } elseif ((bool)($this->arguments['inline'] ?? false)) {
-            $content = @file_get_contents(GeneralUtility::getFileAbsFileName(trim($file)));
-            if ($content !== false) {
+            $content = $this->readFileContent(trim($file));
+            if ($content !== null) {
                 $processedContent = $this->processStyleContent($content);
                 $this->assetCollector->addInlineStyleSheet($identifier, $processedContent, $attributes, $options);
             }
@@ -103,6 +103,23 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
         }
 
         return '';
+    }
+
+    private function readFileContent(string $file): ?string
+    {
+        $absoluteFile = GeneralUtility::getFileAbsFileName($file);
+        if (!is_file($absoluteFile) || !is_readable($absoluteFile)) {
+            return null;
+        }
+
+        set_error_handler(static fn (): bool => true, E_WARNING);
+        try {
+            $content = file_get_contents($absoluteFile);
+        } finally {
+            restore_error_handler();
+        }
+
+        return $content !== false ? $content : null;
     }
 
     private function processStyleContent(string $content): string
