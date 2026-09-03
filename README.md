@@ -84,11 +84,14 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_toolbox']['sentryFrontendEnable
 
 The `ContentMinifierEventListener` automatically minifies the HTML output of all cacheable frontend pages. It hooks into the TYPO3 `AfterCacheableContentIsGeneratedEvent` and is active by default — no configuration required.
 
+The listener delegates to `HtmlMinifier`, which minifies inline `<script>` and `<style>` bodies through `JavaScriptMinifier` and `StyleSheetMinifier` before applying the HTML rules. Script types other than JavaScript — `application/ld+json`, `importmap`, `speculationrules`, `text/x-template` — are never treated as code.
+
 #### Optimizations
 
 | Optimization                     | Description                                                                                                                                                                                                   |
 |----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Remove JS inline comments        | Strips `/** */` comments                                                                                                                                                                                      |
+| Minify inline JavaScript         | Removes `//` and `/* */` comments and squeezes whitespace around punctuation. String, template literal and regular expression content is preserved byte for byte, and linebreaks that automatic semicolon insertion depends on are kept |
+| Minify inline CSS                | Removes `/* */` comments and squeezes whitespace around `{`, `}`, `;`, `,` and after `:`. Descendant combinators, `calc()` operators and string content are preserved                                          |
 | Collapse whitespace              | Converts linebreaks, tabs, and multiple spaces into single spaces                                                                                                                                             |
 | Remove inter-tag spaces          | Removes spaces between HTML tags (preserves inline tags: `a`, `b`, `strong`, `img`, `em`, `i`, `span`, `small`, `big`)                                                                                        |
 | Fix self-closing tags            | Converts `" />` to `">` for HTML5 conformity                                                                                                                                                                  |
