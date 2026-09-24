@@ -46,9 +46,8 @@ final readonly class SaveCloseButtonEventListener
                 ->setShowLabelText(true);
 
             $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][] = $saveCloseButton;
+            $this->pageRenderer->loadJavaScriptModule('@move-elevator/typo3-toolbox/SaveAndClose.js');
         }
-
-        $this->pageRenderer->loadJavaScriptModule('@move-elevator/typo3-toolbox/SaveAndClose.js');
 
         $event->setButtons($buttons);
     }
