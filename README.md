@@ -319,6 +319,10 @@ Arguments are declared via `<f:argument>`, so omitting `fonts` raises a `Missing
 |-----------------------|-------------------|----------------------------------------------------------------------------|
 | SentryMiddleware      | /api/sentry       | Returns sentry environment data as json which is consumed in the frontend. |
 
+The route is matched as a suffix, so it also answers on instances that are not served from the
+document root (e.g. a feature branch deployment under `https://stage.example.com/<branch>/`). The
+Sentry Monitoring Service requests it relative to the current document for the same reason.
+
 ### TypoScript
 
 The extension ships a site set (`Toolbox`) that includes the following TypoScript configuration:

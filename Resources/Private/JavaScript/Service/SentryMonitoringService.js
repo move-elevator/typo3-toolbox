@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/browser'
 
 class SentryMonitoringService {
   init () {
-    HttpService.get(window.location.origin + '/api/sentry').then((data) => {
+    HttpService.get('api/sentry').then((data) => {
       const { dsn, env, release } = data
 
       if (!dsn || dsn.trim() === '') {
