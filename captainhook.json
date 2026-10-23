@@ -10,8 +10,25 @@
 		}
 	},
 	"commit-msg": {
-		"enabled": false,
-		"actions": []
+		"enabled": true,
+		"actions": [
+			{
+				"action": "\\Ramsey\\CaptainHook\\ValidateConventionalCommit",
+				"options": {
+					"config": {
+						"typeCase": "lower",
+						"types": [
+							"chore",
+							"docs",
+							"feat",
+							"fix",
+							"refactor",
+							"test"
+						]
+					}
+				}
+			}
+		]
 	},
 	"pre-push": {
 		"enabled": false,

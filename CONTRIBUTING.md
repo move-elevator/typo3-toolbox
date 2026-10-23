@@ -40,6 +40,10 @@ ddev cgl  sca
 ddev cgl  migration
 ```
 
+## Commit messages
+
+Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/). Allowed types are `chore`, `docs`, `feat`, `fix`, `refactor` and `test`, e.g. `feat: add sentry dashboard widget`. A `commit-msg` hook installed by `ddev start` validates every message.
+
 ## Create a release
 
 Releases are prepared with [version-bumper](https://github.com/eliashaeussler/version-bumper). It derives the next version from the Conventional Commits since the last tag, writes it to `extra.typo3/cms.version` in `composer.json` (shown as extension version in TYPO3), updates `composer.lock` and creates a release commit. `main` is protected, so the release commit goes through a pull request:
