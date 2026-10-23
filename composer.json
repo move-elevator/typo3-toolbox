@@ -23,7 +23,7 @@
 	},
 	"require-dev": {
 		"captainhook/captainhook": "^5.29",
-		"eliashaeussler/version-bumper": "^3.2",
+		"eliashaeussler/version-bumper": "^4.1",
 		"helhum/typo3-console": "^8.3",
 		"move-elevator/composer-translation-validator": "^1.4",
 		"typo3/cms-base-distribution": "^14.3",
@@ -51,7 +51,8 @@
 	},
 	"extra": {
 		"typo3/cms": {
-			"extension-key": "typo3_toolbox"
+			"extension-key": "typo3_toolbox",
+			"version": "2.2.0"
 		}
 	},
 	"scripts": {
