@@ -33,7 +33,8 @@ final readonly class SentryMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        if (!str_ends_with($request->getUri()->getPath(), Route::API_SENTRY->value)) {
+        $sitePath = $request->getAttribute('normalizedParams')?->getSitePath() ?? '/';
+        if ($request->getUri()->getPath() !== rtrim($sitePath, '/') . Route::API_SENTRY->value) {
             return $handler->handle($request);
         }
 
