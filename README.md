@@ -319,9 +319,9 @@ Arguments are declared via `<f:argument>`, so omitting `fonts` raises a `Missing
 |-----------------------|-------------------|----------------------------------------------------------------------------|
 | SentryMiddleware      | /api/sentry       | Returns sentry environment data as json which is consumed in the frontend. |
 
-The route is matched as a suffix, so it also answers on instances that are not served from the
-document root (e.g. a feature branch deployment under `https://stage.example.com/<branch>/`). The
-Sentry Monitoring Service requests it relative to the current document for the same reason.
+The route only answers at the root of the TYPO3 installation, which may be a subpath (e.g. a feature
+branch deployment under `https://stage.example.com/<branch>/api/sentry`). The Sentry Monitoring
+Service derives that root from its own script URL.
 
 ### TypoScript
 

@@ -1,9 +1,14 @@
 import HttpService from './HttpService'
 import * as Sentry from '@sentry/browser'
 
+// The installation root may be a subpath, which only the script's own URL reveals reliably.
+// document.currentScript is only set while this script is evaluated synchronously.
+const installationRoot = document.currentScript?.src.match(/^(.*?\/)(?:_assets|typo3conf\/ext)\//)?.[1]
+  ?? window.location.origin + '/'
+
 class SentryMonitoringService {
   init () {
-    HttpService.get('api/sentry').then((data) => {
+    HttpService.get(installationRoot + 'api/sentry').then((data) => {
       const { dsn, env, release } = data
 
       if (!dsn || dsn.trim() === '') {
