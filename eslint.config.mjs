@@ -12,6 +12,7 @@ export default [
         console: 'readonly',
         document: 'readonly',
         fetch: 'readonly',
+        URL: 'readonly',
         window: 'readonly'
       }
     },

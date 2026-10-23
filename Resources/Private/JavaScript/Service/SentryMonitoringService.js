@@ -1,8 +1,12 @@
 import HttpService from './HttpService'
 import * as Sentry from '@sentry/browser'
 
-const installationRoot = document.currentScript?.src.match(/^(.*?\/)(?:_assets|typo3conf\/ext)\//)?.[1]
-  ?? window.location.origin + '/'
+const scriptPath = document.currentScript?.src
+  ? new URL(document.currentScript.src, window.location.origin).pathname
+  : ''
+const installationRoot = window.location.origin + (
+  scriptPath.match(/^(.*?\/)(?:_assets|typo3conf\/ext)\//)?.[1] ?? '/'
+)
 
 class SentryMonitoringService {
   init () {
