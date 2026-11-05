@@ -1,0 +1,66 @@
+diff --git a/Classes/Configuration/ConfigurationManager.php b/Classes/Configuration/ConfigurationManager.php
+--- a/Classes/Configuration/ConfigurationManager.php
++++ b/Classes/Configuration/ConfigurationManager.php
+@@ -396,6 +396,7 @@
+                 1346323822
+             );
+         }
++        $configuration = $this->keepEnvironmentPlaceholders($configuration);
+         $configuration = ArrayUtility::sortByKeyRecursive($configuration);
+         $result = GeneralUtility::writeFile(
+             $systemSettingsFile,
+@@ -475,4 +476,54 @@
+         }
+         return ArrayUtility::isValidPath($this->getDefaultConfiguration(), $path);
+     }
++
++    private const ENVIRONMENT_PLACEHOLDER = '<set by dotenv>';
++
++    /**
++     * Runtime values from additional.php must not be persisted.
++     */
++    private function keepEnvironmentPlaceholders(array $configuration): array
++    {
++        $protectedPaths = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['typo3_toolbox']['protectedConfigurationPaths'] ?? [];
++        if (!is_array($protectedPaths) || array_filter(
++            $protectedPaths,
++            static fn(mixed $path): bool => !is_string($path) || $path === ''
++        ) !== []) {
++            throw new SettingsWriteException(
++                'Protected configuration paths must be an array of non-empty strings.',
++                1792573200
++            );
++        }
++
++        $currentConfiguration = is_file($this->getSystemConfigurationFileLocation())
++            ? $this->getLocalConfiguration()
++            : [];
++        foreach ([...$protectedPaths, ...$this->findPlaceholderPaths($currentConfiguration)] as $path) {
++            // A whole section is never replaced, that would drop all of its settings
++            if (ArrayUtility::isValidPath($configuration, $path)
++                && !is_array(ArrayUtility::getValueByPath($configuration, $path))
++            ) {
++                $configuration = ArrayUtility::setValueByPath($configuration, $path, self::ENVIRONMENT_PLACEHOLDER);
++            }
++        }
++        return $configuration;
++    }
++
++    /**
++     * Paths are segment lists because configuration keys may contain the path delimiter.
++     *
++     * @return list<list<array-key>>
++     */
++    private function findPlaceholderPaths(array $configuration, array $prefix = []): array
++    {
++        $paths = [];
++        foreach ($configuration as $key => $value) {
++            if ($value === self::ENVIRONMENT_PLACEHOLDER) {
++                $paths[] = [...$prefix, $key];
++            } elseif (is_array($value)) {
++                $paths = [...$paths, ...$this->findPlaceholderPaths($value, [...$prefix, $key])];
++            }
++        }
++        return $paths;
++    }
+ }
