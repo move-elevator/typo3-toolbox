@@ -23,6 +23,7 @@ This extension provides several tools for TYPO3 integrators and developers.
 - Adds a backend avatar provider that assigns the move elevator logo to backend users with an `@move-elevator.de` email address (when no custom avatar is set)
 - Adds two backend dashboard widgets (Welcome, End-of-Life) in a dedicated *move:elevator* widget group, plus `moveElevatorEditor` and `moveElevatorAdmin` dashboard presets
 - Adds a reusable Fluid partial which preloads webfonts via `<link rel="preload">` in the page head
+- Ships an optional TYPO3 Core patch that keeps ENV-backed secrets out of `config/system/settings.php` (see [Protect ENV-backed settings](docs/protected-configuration.md))
 
 ## Version support
 
