@@ -23,7 +23,6 @@ final class ComponentLifecycleTest extends UnitTestCase
         bool $endOfLifeReached = false,
     ): ComponentLifecycle {
         return new ComponentLifecycle(
-            product: 'php',
             version: '8.4',
             label: 'PHP',
             phases: [],

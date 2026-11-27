@@ -54,7 +54,6 @@ final readonly class LifecycleDataProvider
         }
 
         return new ComponentLifecycle(
-            product: $request->product,
             version: $request->version,
             label: $request->label(),
             phases: $this->buildPhases($release),

@@ -130,7 +130,7 @@ final class TimelineFactoryTest extends UnitTestCase
         $window = new TimeWindow($now->modify('-4 years'), $now->modify('+4 years'));
 
         $timeline = new TimelineFactory()->build(
-            [new ComponentLifecycle('typo3', '14.3', 'TYPO3', $phases, false, null, null)],
+            [new ComponentLifecycle('14.3', 'TYPO3', $phases, false, null, null)],
             $window,
             $now,
             180,
