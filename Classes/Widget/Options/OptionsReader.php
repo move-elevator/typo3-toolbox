@@ -170,7 +170,7 @@ final readonly class OptionsReader
     {
         throw new InvalidWidgetOptionsException(
             ($this->path !== '' ? $this->path . ': ' : '') . $message,
-            5954496666
+            1795786301
         );
     }
 
@@ -179,7 +179,7 @@ final readonly class OptionsReader
      */
     public function fail(string $key, string $message): never
     {
-        throw new InvalidWidgetOptionsException($this->pathFor($key) . ': ' . $message, 4405121941);
+        throw new InvalidWidgetOptionsException($this->pathFor($key) . ': ' . $message, 1795786302);
     }
 
     private function pathFor(string $key): string
