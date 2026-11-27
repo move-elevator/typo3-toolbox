@@ -25,34 +25,40 @@ class LastDeploymentEventListener
             return;
         }
 
-        $lastModified = $this->getLastModifiedTime($path);
-        if (class_exists(\IntlDateFormatter::class)) {
-            $locale = $GLOBALS['TYPO3_CONF_VARS']['SYS']['locale'] ?? \Locale::getDefault();
-            $timeZone = 'Europe/Berlin';
-
-            if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone']) && $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] !== '') {
-                $timeZone = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'];
-            } elseif (date_default_timezone_get() !== '') {
-                $timeZone = date_default_timezone_get();
-            }
-
-            $formatter = new \IntlDateFormatter(
-                $locale,
-                \IntlDateFormatter::FULL,
-                \IntlDateFormatter::FULL,
-                $timeZone,
-                \IntlDateFormatter::GREGORIAN
-            );
-            $humanFormatDateTime = $formatter->format($lastModified) ?: '';
-        } else {
-            $humanFormatDateTime = date('D, d.m.Y H:i', $lastModified);
-        }
+        $humanFormatDateTime = $this->formatDateTime($this->getLastModifiedTime($path));
 
         $systemInformation->getToolbarItem()->addSystemInformation(
             $this->getLanguageService()->sL('typo3_toolbox.be:system_information.last_updated'),
             $humanFormatDateTime,
             'actions-refresh',
         );
+    }
+
+    private function formatDateTime(int $timestamp): string
+    {
+        if (!class_exists(\IntlDateFormatter::class)) {
+            return date('D, d.m.Y H:i', $timestamp);
+        }
+
+        $formatter = new \IntlDateFormatter(
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['locale'] ?? \Locale::getDefault(),
+            \IntlDateFormatter::FULL,
+            \IntlDateFormatter::FULL,
+            $this->getTimeZone(),
+            \IntlDateFormatter::GREGORIAN
+        );
+
+        return $formatter->format($timestamp) ?: '';
+    }
+
+    private function getTimeZone(): string
+    {
+        $configuredTimeZone = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? '';
+        if ($configuredTimeZone !== '') {
+            return $configuredTimeZone;
+        }
+
+        return date_default_timezone_get() ?: 'Europe/Berlin';
     }
 
     private function getLastModifiedTime(string $path): int
