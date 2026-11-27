@@ -115,6 +115,6 @@ final class WelcomeWidget implements WidgetInterface, RequestAwareWidgetInterfac
 
     private function now(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable()->setTimestamp($this->context->getAspect('date')->get('timestamp'));
+        return $this->context->getPropertyFromAspect('date', 'full');
     }
 }

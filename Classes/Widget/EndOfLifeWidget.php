@@ -122,8 +122,6 @@ final class EndOfLifeWidget implements WidgetInterface, RequestAwareWidgetInterf
 
     private function now(): \DateTimeImmutable
     {
-        $timestamp = $this->context->getAspect('date')->get('timestamp');
-
-        return new \DateTimeImmutable()->setTimestamp($timestamp);
+        return $this->context->getPropertyFromAspect('date', 'full');
     }
 }
