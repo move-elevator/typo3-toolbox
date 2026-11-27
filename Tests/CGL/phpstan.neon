@@ -15,9 +15,6 @@ parameters:
 	excludePaths:
 		- ../../.Build (?)
 
-	type_coverage:
-		constant: 0 # TODO: Set to 100, when PHP 8.3 is minimum requirement
-
 	ergebnis:
 		# AbstractRepository is a public extension point: sealing its methods would
 		# fatal out any third-party repository that overrides them
