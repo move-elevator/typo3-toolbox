@@ -7,7 +7,6 @@ namespace MoveElevator\Typo3Toolbox\ViewHelpers\Asset;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /*
 * Usage example:
@@ -35,15 +34,7 @@ final class CssViewHelper extends AbstractTagBasedViewHelper
     #[\Override]
     public function initialize(): void
     {
-        // Add a tag builder, that does not html encode values, because rendering with encoding happens in AssetRenderer
-        $this->setTagBuilder(
-            new class () extends TagBuilder {
-                public function addAttribute($attributeName, $attributeValue, $escapeSpecialCharacters = false): void // @phpstan-ignore-line typeCoverage.paramTypeCoverage
-                {
-                    parent::addAttribute($attributeName, $attributeValue, false);
-                }
-            }
-        );
+        $this->setTagBuilder(new UnescapedTagBuilder());
 
         parent::initialize();
     }
