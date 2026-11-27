@@ -154,11 +154,6 @@ final readonly class OptionsReader
         return $readers;
     }
 
-    public function path(): string
-    {
-        return $this->path;
-    }
-
     /**
      * @param list<string> $keys
      * @return list<string> keys that are actually present
