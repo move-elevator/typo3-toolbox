@@ -10,6 +10,9 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * @api
+ */
 abstract class AbstractRepository
 {
     abstract protected function getTableName(): string;
