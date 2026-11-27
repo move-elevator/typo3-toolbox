@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use MoveElevator\Typo3Toolbox\Backend\Avatar\MoveElevatorAvatarProvider;
 use MoveElevator\Typo3Toolbox\Enumeration\Configuration;
 use MoveElevator\Typo3Toolbox\Page\AssetRenderer;
