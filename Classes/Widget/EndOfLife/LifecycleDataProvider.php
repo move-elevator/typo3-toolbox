@@ -54,7 +54,6 @@ final readonly class LifecycleDataProvider
         }
 
         return new ComponentLifecycle(
-            product: $request->product,
             version: $request->version,
             label: $request->label(),
             phases: $this->buildPhases($release),
@@ -215,7 +214,7 @@ final readonly class LifecycleDataProvider
                 return null;
             }
 
-            $data = json_decode((string)$response->getBody(), true);
+            $data = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
             $result = is_array($data) ? ($data['result'] ?? null) : null;
 
             return $this->normalizeReleases(is_array($result) ? ($result['releases'] ?? null) : null);

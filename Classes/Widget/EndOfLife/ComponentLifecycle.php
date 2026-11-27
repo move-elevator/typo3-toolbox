@@ -13,7 +13,6 @@ final readonly class ComponentLifecycle
      * @param list<LifecyclePhase> $phases ordered full support → security → ELTS
      */
     public function __construct(
-        public string $product,
         public string $version,
         public string $label,
         public array $phases,

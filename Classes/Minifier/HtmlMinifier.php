@@ -202,7 +202,7 @@ final readonly class HtmlMinifier
                 $json = trim($matches[1]);
 
                 try {
-                    $minifiedJson = json_encode(json_decode($json, true), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+                    $minifiedJson = json_encode(json_decode($json, true, 512, JSON_THROW_ON_ERROR), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
                 } catch (\JsonException) {
                     return '';
                 }
