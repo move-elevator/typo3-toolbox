@@ -21,7 +21,7 @@ class LastDeploymentEventListener
             return;
         }
         $path = GeneralUtility::getFileAbsFileName($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][Configuration::EXT_KEY->value]['systemInformationToolbar']['fileToCheck']);
-        if ($path !== '' || !file_exists($path)) {
+        if ($path === '' || !file_exists($path)) {
             return;
         }
 
