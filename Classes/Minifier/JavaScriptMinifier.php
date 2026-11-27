@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\Typo3Toolbox\Minifier;
 
-final class JavaScriptMinifier
+final readonly class JavaScriptMinifier
 {
     /**
      * @var list<string>
@@ -40,11 +40,10 @@ final class JavaScriptMinifier
 
     private const string REGULAR_EXPRESSION_PATTERN = '/\/(?:\\\\.|\[(?:\\\\.|[^\]\\\\\n])*\]|[^\/\\\\\n\[])+\/[a-z]*/A';
 
-    private const string IDENTIFIER_CHARACTER_PATTERN = '/[\w$\\\\\x80-\xff]/';
-
-    private const string STATEMENT_END_PATTERN = '/[\w$)\]}\'"`]/';
-
-    private const string STATEMENT_START_PATTERN = '/[\w$({\[+\-!~\'"`\/]/';
+    public function __construct(
+        private JavaScriptWhitespace $whitespace = new JavaScriptWhitespace(),
+    ) {
+    }
 
     public function minify(string $code): string
     {
@@ -56,7 +55,7 @@ final class JavaScriptMinifier
         $followsControlHead = false;
 
         while ($position < $length) {
-            $skipped = $this->readComment($code, $position) ?? $this->readWhitespace($code, $position);
+            $skipped = $this->whitespace->skip($code, $position);
 
             if (null !== $skipped) {
                 [$position, $spansLines] = $skipped;
@@ -64,10 +63,7 @@ final class JavaScriptMinifier
                 continue;
             }
 
-            if (null !== $pendingLinebreak && '' !== $result) {
-                $result .= $this->separator($result, $code[$position], $pendingLinebreak);
-            }
-
+            $result .= $this->whitespace->separator($result, $code[$position], $pendingLinebreak);
             $pendingLinebreak = null;
             $literal = $this->readLiteral($code, $position, $result, $followsControlHead);
 
@@ -91,85 +87,6 @@ final class JavaScriptMinifier
         }
 
         return $result;
-    }
-
-    /**
-     * @return array{int, bool}|null
-     */
-    private function readWhitespace(string $code, int $position): ?array
-    {
-        $run = strspn($code, " \t\n\r", $position);
-
-        if (0 === $run) {
-            return null;
-        }
-
-        $whitespace = substr($code, $position, $run);
-
-        return [$position + $run, str_contains($whitespace, "\n") || str_contains($whitespace, "\r")];
-    }
-
-    /**
-     * @return array{int, bool}|null
-     */
-    private function readComment(string $code, int $position): ?array
-    {
-        if ('/' !== $code[$position]) {
-            return null;
-        }
-
-        $nextCharacter = $code[$position + 1] ?? '';
-
-        if ('*' === $nextCharacter) {
-            $end = strpos($code, '*/', $position + 2);
-            $end = false === $end ? strlen($code) : $end + 2;
-
-            return [$end, str_contains(substr($code, $position, $end - $position), "\n")];
-        }
-
-        if ('/' === $nextCharacter) {
-            $end = strpos($code, "\n", $position);
-
-            return [false === $end ? strlen($code) : $end, false];
-        }
-
-        return null;
-    }
-
-    /**
-     * A linebreak that automatic semicolon insertion relies on has to survive, otherwise
-     * `return` and its value end up on one line and the script changes meaning.
-     */
-    private function separator(string $precedingCode, string $nextCharacter, bool $spansLines): string
-    {
-        $previousCharacter = $precedingCode[strlen($precedingCode) - 1];
-
-        if ($spansLines
-            && 1 === preg_match(self::STATEMENT_END_PATTERN, $previousCharacter)
-            && 1 === preg_match(self::STATEMENT_START_PATTERN, $nextCharacter)
-        ) {
-            return "\n";
-        }
-
-        return $this->needsSpace($previousCharacter, $nextCharacter) ? ' ' : '';
-    }
-
-    /**
-     * Dropping the space would merge two identifiers, or turn `a + +b` into an increment.
-     */
-    private function needsSpace(string $previousCharacter, string $nextCharacter): bool
-    {
-        if (('+' === $previousCharacter || '-' === $previousCharacter) && $previousCharacter === $nextCharacter) {
-            return true;
-        }
-
-        // `1 .toString()` would collapse into the invalid numeric literal `1.toString()`
-        if ('.' === $nextCharacter && 1 === preg_match('/\d/', $previousCharacter)) {
-            return true;
-        }
-
-        return 1 === preg_match(self::IDENTIFIER_CHARACTER_PATTERN, $previousCharacter)
-            && 1 === preg_match(self::IDENTIFIER_CHARACTER_PATTERN, $nextCharacter);
     }
 
     /**
@@ -245,10 +162,10 @@ final class JavaScriptMinifier
         $depth = 1;
 
         while ($position < $length) {
-            $comment = $this->readComment($code, $position);
+            $skipped = $this->whitespace->skip($code, $position);
 
-            if (null !== $comment) {
-                $position = $comment[0];
+            if (null !== $skipped) {
+                $position = $skipped[0];
                 continue;
             }
 
